@@ -5,7 +5,14 @@
     </header>
     <main>
       <div class="container">
-        <router-view/>
+        <div class="row">
+          <GridVue tamanho="4">
+            Menu
+          </GridVue>
+          <GridVue tamanho="8">
+            <router-view/>
+          </GridVue>
+        </div>
       </div>
     </main>
     <FooterVue cor="green darken-1" logo="Social" descricao="Teste de descrição" ano="2022">
@@ -20,10 +27,11 @@
 <script>
 import NavBar from '@/components/layouts/NavBar'
 import FooterVue from '@/components/layouts/FooterVue'
+import GridVue from '@/components/layouts/GridVue'
 export default {
   name: 'App',
   components: {
-    NavBar, FooterVue
+    NavBar, FooterVue, GridVue
   }
 }
 </script>
