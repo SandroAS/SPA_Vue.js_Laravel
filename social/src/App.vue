@@ -7,7 +7,19 @@
       <div class="container">
         <div class="row">
           <GridVue tamanho="4">
-            Menu
+            <CardMenuVue>
+              <div class="row valign-wrapper">
+                <GridVue tamanho="4">
+                  <img src="https://materializecss.com/images/yuna.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                </GridVue>
+                <GridVue tamanho="8">
+                  <span class="black-text">
+                    <h4>Maria</h4>
+                    This is a square image. Add the "circle" class to it to make it appear circular.
+                  </span>
+                </GridVue>
+              </div>
+            </CardMenuVue>
           </GridVue>
           <GridVue tamanho="8">
             <router-view/>
@@ -28,10 +40,11 @@
 import NavBar from '@/components/layouts/NavBar'
 import FooterVue from '@/components/layouts/FooterVue'
 import GridVue from '@/components/layouts/GridVue'
+import CardMenuVue from '@/components/layouts/CardMenuVue'
 export default {
   name: 'App',
   components: {
-    NavBar, FooterVue, GridVue
+    NavBar, FooterVue, GridVue, CardMenuVue
   }
 }
 </script>
