@@ -1,14 +1,6 @@
 <template>
   <span>
-    <div class="row">
-      <GridVue class="input-field" tamanho="12">
-        <textarea id="textarea1" class="materialize-textarea"></textarea>
-        <label for="textarea1">O que esta acontecendo?</label>
-      </GridVue>
-      <p>
-        <GridVue tamanho="2 offset-s10" class="btn waves-effect waves-light">Publicar</GridVue>
-      </p>
-    </div>
+    <PublicarConteudoVue/>
     <CardConteudoVue
       perfil="http://materializecss.com/images/yuna.jpg"
       nome="Maria Silva"
@@ -26,11 +18,11 @@
 <script>
 import CardConteudoVue from '@/components/social/CardConteudoVue'
 import CardDetalheVue from '@/components/social/CardDetalheVue'
-import GridVue from '@/components/layouts/GridVue'
+import PublicarConteudoVue from '@/components/social/PublicarConteudoVue'
 export default {
   name: 'Home',
   components:{
-    CardConteudoVue, CardDetalheVue, GridVue
+    CardConteudoVue, CardDetalheVue, PublicarConteudoVue
   },
   data () {
     return {
