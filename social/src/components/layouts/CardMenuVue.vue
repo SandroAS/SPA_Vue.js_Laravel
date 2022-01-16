@@ -1,13 +1,17 @@
 <template>
   <div class="card-panel grey lighten-5 z-depth-1">
-    <slot/>
+    <slot />
   </div>
 </template>
 
 <script>
+import CardMenuVue from '@/components/layouts/CardMenuVue'
 export default {
   name: "CardMenuVue",
-  props: []
+  components: {
+    CardMenuVue
+  },
+  props: [],
 }
 </script>
 

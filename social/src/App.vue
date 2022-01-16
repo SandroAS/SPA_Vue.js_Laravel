@@ -14,11 +14,14 @@
                 </GridVue>
                 <GridVue tamanho="8">
                   <span class="black-text">
-                    <h4>Maria</h4>
+                    <h4>Maria Silva</h4>
                     This is a square image. Add the "circle" class to it to make it appear circular.
                   </span>
                 </GridVue>
               </div>
+            </CardMenuVue>
+            <CardMenuVue>
+              <h3>Teste</h3>
             </CardMenuVue>
           </GridVue>
           <GridVue tamanho="8">
