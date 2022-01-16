@@ -6,13 +6,13 @@
     <main>
       <div class="container">
         <div class="row">
-          <GridVue tamanho="6">
+          <GridVue tamanho="8">
             <CardMenuVue>
-              
+              <slot name="menuesquerdo"/>
             </CardMenuVue>
           </GridVue>
-          <GridVue tamanho="6">
-            <slot/>
+          <GridVue tamanho="4">
+            <slot name="principal"/>
           </GridVue>
         </div>
       </div>
