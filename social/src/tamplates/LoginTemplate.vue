@@ -4,6 +4,7 @@
       <NavBar logo="Social" url="/" cor="green darken-1">
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/login">Login</router-link></li>
+        <li><router-link to="/cadastro">Cadastre-se</router-link></li>
       </NavBar>
     </header>
     <main>
