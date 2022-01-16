@@ -1,31 +1,24 @@
 <template>
   <span>
     <header>
-      <NavBar logo="Social" cor="green darken-1"/>
+      <NavBar logo="Social" url="#/" cor="green darken-1">
+        <li><a href="#/">Home</a></li>
+        <li><a href="#/login">Entrar</a></li>
+      </NavBar>
     </header>
     <main>
       <div class="container">
         <div class="row">
           <GridVue tamanho="4">
             <CardMenuVue>
-              <div class="row valign-wrapper">
-                <GridVue tamanho="4">
-                  <img src="https://materializecss.com/images/yuna.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
-                </GridVue>
-                <GridVue tamanho="8">
-                  <span class="black-text">
-                    <h4>Maria Silva</h4>
-                    This is a square image. Add the "circle" class to it to make it appear circular.
-                  </span>
-                </GridVue>
-              </div>
+              <slot name="menuesquerdo"/>
             </CardMenuVue>
             <CardMenuVue>
               <h3>Teste</h3>
             </CardMenuVue>
           </GridVue>
           <GridVue tamanho="8">
-            <slot/>
+            <slot name="principal"/>
           </GridVue>
         </div>
       </div>
