@@ -2,6 +2,7 @@
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
@@ -23,7 +24,7 @@ Route::post('/cadastro', function (Request $request) {
     $validacao = Validator::make($data, [
         'name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        'password' => ['required', 'string', 'min:8', 'confirmed'],
+        'password' => ['required', 'string', 'min:6', 'confirmed'],
     ]);
 
     if($validacao->fails()){
@@ -39,6 +40,27 @@ Route::post('/cadastro', function (Request $request) {
     $user->token = $user->createToken($user->email)->accessToken;
 
     return $user;
+});
+
+Route::post('/login', function (Request $request) {
+    $data = $request->all();
+
+    $validacao = Validator::make($data, [
+        'email' => ['required', 'string', 'email', 'max:255'],
+        'password' => ['required', 'string', 'min:6'],
+    ]);
+
+    if($validacao->fails()){
+        return $validacao->errors();
+    }
+
+    if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
+        $user = auth()->user();
+        $user->token = $user->createToken($user->email)->accessToken;
+        return $user;
+    } else {
+        return ['Mensagem de erro' => 'Autenticação falhou, email ou senha não conferem.'];
+    }
 });
 
 Route::middleware('auth:api')->get('/usuario', function (Request $request) {
