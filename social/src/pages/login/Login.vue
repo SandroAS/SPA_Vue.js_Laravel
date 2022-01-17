@@ -38,7 +38,13 @@ export default {
         email: this.usuario.email,
         password: this.usuario.password,
       }).then((response) => {
-        console.log(response);
+        if(response.data.token){
+          console.log("1",response);
+        } else if(response.data.status) {
+          console.log("2",response);
+        } else {
+          console.log("3",response);
+        }
       }).catch((error) => {
         console.error(error);
       })

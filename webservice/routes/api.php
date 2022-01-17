@@ -59,7 +59,7 @@ Route::post('/login', function (Request $request) {
         $user->token = $user->createToken($user->email)->accessToken;
         return $user;
     } else {
-        return ['Mensagem de erro' => 'Autenticação falhou, email ou senha não conferem.'];
+        return ['status' => 'false'];
     }
 });
 
