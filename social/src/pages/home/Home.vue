@@ -35,10 +35,11 @@ import SiteTemplate from '@/tamplates/SiteTemplate'
 import CardConteudoVue from '@/components/social/CardConteudoVue'
 import CardDetalheVue from '@/components/social/CardDetalheVue'
 import PublicarConteudoVue from '@/components/social/PublicarConteudoVue'
+import GridVue from '@/components/layouts/GridVue'
 export default {
   name: 'Home',
   components:{
-    CardConteudoVue, CardDetalheVue, PublicarConteudoVue, SiteTemplate
+    CardConteudoVue, CardDetalheVue, PublicarConteudoVue, SiteTemplate, GridVue
   },
   data () {
     return {

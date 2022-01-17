@@ -7,9 +7,9 @@
     <span slot="principal">
       <h2>Login</h2>
 
-      <input type="email" placeholder="E-mail">
-      <input type="password" placeholder="Senha">
-      <button type="button" class="btn">Entrar</button>
+      <input type="email" placeholder="E-mail" v-model="usuario.email">
+      <input type="password" placeholder="Senha" v-model="usuario.password">
+      <button type="button" class="btn" @click="login()">Entrar</button>
       <router-link to="/cadastro" class="btn orange">Cadastre-se</router-link>
     </span>
 
@@ -18,19 +18,32 @@
 
 <script>
 import LoginTamplate from '@/tamplates/LoginTemplate'
-import CardConteudoVue from '@/components/social/CardConteudoVue'
-import CardDetalheVue from '@/components/social/CardDetalheVue'
-import PublicarConteudoVue from '@/components/social/PublicarConteudoVue'
+import axios from 'axios'
 export default {
   name: 'Login',
   components:{
-    CardConteudoVue, CardDetalheVue, PublicarConteudoVue, LoginTamplate
+   LoginTamplate
   },
   data () {
     return {
-
+      usuario: {
+        email: "",
+        password: "",
+      }
     }
   },
+  methods: {
+    login() {
+      axios.post('http://127.0.0.1:8000/api/login', {
+        email: this.usuario.email,
+        password: this.usuario.password,
+      }).then((response) => {
+        console.log(response);
+      }).catch((error) => {
+        console.error(error);
+      })
+    }
+  }
 }
 </script>
 
