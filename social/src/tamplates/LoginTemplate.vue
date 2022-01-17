@@ -5,7 +5,7 @@
         <li><router-link to="/">Home</router-link></li>
         <li v-if="!usuario"><router-link to="/login">Login</router-link></li>
         <li v-if="!usuario"><router-link to="/cadastro">Cadastre-se</router-link></li>
-        <li v-if="usuario"><router-link to="/cadastro">Perfil</router-link></li>
+        <li v-if="usuario"><router-link to="/cadastro">{{ usuario.name }}</router-link></li>
         <li v-if="usuario"><a @click="sair()">Sair</a></li>
       </NavBar>
     </header>
@@ -44,13 +44,14 @@ export default {
   },
   data() {
     return {
-      usuarios: false
+      usuario: false
     }
   },
   created(){
     let uauarioAux = sessionStorage.getItem('usuario')
     if(uauarioAux){
       this.usuario = JSON.parse(uauarioAux);
+      this.$router.push('/')
     }
   },
   methods: {

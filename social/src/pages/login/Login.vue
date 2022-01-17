@@ -41,6 +41,7 @@ export default {
         if(response.data.token){
           alert("Login realizado com sucesso!");
           sessionStorage.setItem('usuario', JSON.stringify(response.data))
+          this.$router.push('/')
         } else if(response.data.status) {
           alert("Login não existe!!");
         } else {
