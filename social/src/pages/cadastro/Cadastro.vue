@@ -7,19 +7,20 @@
     <span slot="principal">
       <h2>Cadastro</h2>
 
-      <input type="text" placeholder="Nome">
-      <input type="email" placeholder="E-mail">
-      <input type="password" placeholder="Senha">
-      <input type="password" placeholder="Confirme sua Senha">
-      <button type="button" class="btn">Enviar</button>
+      <input type="text" placeholder="Nome" v-model="usuario.name">
+      <input type="email" placeholder="E-mail" v-model="usuario.email">
+      <input type="password" placeholder="Senha" v-model="usuario.password">
+      <input type="password" placeholder="Confirme sua Senha" v-model="usuario.password_confirmation">
+      <button type="button" class="btn" @click="cadastro()">Enviar</button>
       <router-link to="/login" class="btn orange">Já tenho conta</router-link>
     </span>
-    
+
   </LoginTamplate>
 </template>
 
 <script>
 import LoginTamplate from '@/tamplates/LoginTemplate'
+import axios from 'axios'
 export default {
   name: 'Cadastro',
   components:{
@@ -27,9 +28,41 @@ export default {
   },
   data () {
     return {
-      
+      usuario: {
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: ""
+      }
     }
   },
+  methods: {
+    cadastro() {
+      axios.post('http://127.0.0.1:8000/api/cadastro', {
+        name: this.usuario.name,
+        email: this.usuario.email,
+        password: this.usuario.password,
+        password_confirmation: this.usuario.password_confirmation,
+      }).then((response) => {
+        if(response.data.token){
+          alert("Cadastro realizado com sucesso!");
+          sessionStorage.setItem('usuario', JSON.stringify(response.data))
+          this.$router.push('/')
+        } else if(response.data.status == false) {
+          alert("Erro no cadastro! Tente novamente mais tarde.");
+        } else {
+          let errors = "";
+          for (let error of Object.values(response.data)){
+            errors += error + " ";
+          }
+          alert(errors);
+        }
+      }).catch((error) => {
+        console.error(error);
+        alert("Erro! Tente novamente mais tarde.")
+      })
+    }
+  }
 }
 </script>
 

@@ -2,7 +2,6 @@
   <span>
     <header>
       <NavBar logo="Social" url="/" cor="green darken-1">
-        <li><router-link to="/">Home</router-link></li>
         <li v-if="!usuario"><router-link to="/login">Login</router-link></li>
         <li v-if="!usuario"><router-link to="/cadastro">Cadastre-se</router-link></li>
         <li v-if="usuario"><router-link to="/cadastro">{{ usuario.name }}</router-link></li>
@@ -54,12 +53,15 @@ export default {
     let uauarioAux = sessionStorage.getItem('usuario')
     if(uauarioAux){
       this.usuario = JSON.parse(uauarioAux);
+    } else {
+      this.$router.push('/login')
     }
   },
   methods: {
     sair(){
       sessionStorage.clear();
       this.usuario = false;
+      this.$router.push('/login')
     }
   }
 }

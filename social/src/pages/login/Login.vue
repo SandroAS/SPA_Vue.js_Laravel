@@ -42,7 +42,7 @@ export default {
           alert("Login realizado com sucesso!");
           sessionStorage.setItem('usuario', JSON.stringify(response.data))
           this.$router.push('/')
-        } else if(response.data.status) {
+        } else if(response.data.status == false) {
           alert("Login não existe!!");
         } else {
           let errors = "";
