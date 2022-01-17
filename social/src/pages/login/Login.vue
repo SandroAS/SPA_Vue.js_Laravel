@@ -40,8 +40,9 @@ export default {
       }).then((response) => {
         if(response.data.token){
           alert("Login realizado com sucesso!");
+          sessionStorage.setItem('usuario', JSON.stringify(response.data))
         } else if(response.data.status) {
-          alert("Login inválido!");
+          alert("Login não existe!!");
         } else {
           let errors = "";
           for (let error of Object.values(response.data)){
