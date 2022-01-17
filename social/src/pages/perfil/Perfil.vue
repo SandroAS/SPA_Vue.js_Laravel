@@ -65,19 +65,16 @@ export default {
           "authorization": "Bearer " + this.usuarioAuth.token
         }
       }).then((response) => {
-        console.log(response)
-        // if(response.data.token){
-        //   console.log(response)
-        //   alert("Perfil do usuário atualizado com sucesso!");
-        // } else if(response.data.status == false) {
-        //   alert("Login não existe!!");
-        // } else {
-        //   let errors = "";
-        //   for (let error of Object.values(response.data)){
-        //     errors += error + " ";
-        //   }
-        //   alert(errors);
-        // }
+        if(response.data.token){
+          sessionStorage.setItem('usuario', JSON.stringify(response.data))
+          alert("Perfil do usuário atualizado com sucesso!");
+        } else {
+          let errors = "";
+          for (let error of Object.values(response.data)){
+            errors += error + " ";
+          }
+          alert(errors);
+        }
       }).catch((error) => {
         console.error(error);
         alert("Erro! Tente novamente mais tarde.")
