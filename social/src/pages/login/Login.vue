@@ -39,14 +39,19 @@ export default {
         password: this.usuario.password,
       }).then((response) => {
         if(response.data.token){
-          console.log("1",response);
+          alert("Login realizado com sucesso!");
         } else if(response.data.status) {
-          console.log("2",response);
+          alert("Login inválido!");
         } else {
-          console.log("3",response);
+          let errors = "";
+          for (let error of Object.values(response.data)){
+            errors += error + " ";
+          }
+          alert(errors);
         }
       }).catch((error) => {
         console.error(error);
+        alert("Erro! Tente novamente mais tarde.")
       })
     }
   }
