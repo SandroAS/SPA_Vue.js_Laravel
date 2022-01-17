@@ -7,8 +7,8 @@
     <span slot="principal">
       <h2>Login</h2>
 
-      <input type="email" placeholder="E-mail" v-model="usuario.email">
-      <input type="password" placeholder="Senha" v-model="usuario.password">
+      <input type="email" placeholder="E-mail" v-model="usuario.email" autocomplete="off">
+      <input type="password" placeholder="Senha" v-model="usuario.password" autocomplete="off">
       <button type="button" class="btn" @click="login()">Entrar</button>
       <router-link to="/cadastro" class="btn orange">Cadastre-se</router-link>
     </span>

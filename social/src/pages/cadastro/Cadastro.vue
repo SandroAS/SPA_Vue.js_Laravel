@@ -7,10 +7,10 @@
     <span slot="principal">
       <h2>Cadastro</h2>
 
-      <input type="text" placeholder="Nome" v-model="usuario.name">
-      <input type="email" placeholder="E-mail" v-model="usuario.email">
-      <input type="password" placeholder="Senha" v-model="usuario.password">
-      <input type="password" placeholder="Confirme sua Senha" v-model="usuario.password_confirmation">
+      <input type="text" placeholder="Nome" v-model="usuario.name" autocomplete="off">
+      <input type="email" placeholder="E-mail" v-model="usuario.email" autocomplete="off">
+      <input type="password" placeholder="Senha" v-model="usuario.password" autocomplete="off">
+      <input type="password" placeholder="Confirme sua Senha" v-model="usuario.password_confirmation" autocomplete="off">
       <button type="button" class="btn" @click="cadastro()">Enviar</button>
       <router-link to="/login" class="btn orange">Já tenho conta</router-link>
     </span>
