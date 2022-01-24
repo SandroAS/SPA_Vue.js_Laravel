@@ -3,12 +3,12 @@
     <span slot="menuesquerdo">
       <div class="row valign-wrapper">
         <GridVue tamanho="4">
-          <img src="https://materializecss.com/images/yuna.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+          <img :src="usuario.imagem" :alt="usuario.name" class="circle responsive-img"> <!-- notice the "circle" class -->
         </GridVue>
         <GridVue tamanho="8">
           <span class="black-text">
-            <h4>Maria Silva</h4>
-            This is a square image. Add the "circle" class to it to make it appear circular.
+            <h4>{{ usuario.name }}</h4>
+            
           </span>
         </GridVue>
       </div>
@@ -16,8 +16,8 @@
     <span slot="principal">
       <PublicarConteudoVue/>
       <CardConteudoVue
-        perfil="http://materializecss.com/images/yuna.jpg"
-        nome="Maria Silva"
+        :perfil="usuario.imagem"
+        :nome="usuario.name"
         data="13/01/18 13:30"
       >
         <CardDetalheVue 
@@ -43,7 +43,23 @@ export default {
   },
   data () {
     return {
-
+      usuarioAuth: false,
+      usuario: {
+        name: "",
+        email: "",
+        imagem: "",
+        password: "",
+      }
+    }
+  },
+  created(){
+    let uauarioAux = sessionStorage.getItem('usuario')
+    if(uauarioAux){
+      this.usuarioAuth = JSON.parse(uauarioAux);
+      this.usuario.name = this.usuarioAuth.name;
+      this.usuario.email = this.usuarioAuth.email;
+      this.usuario.imagem = this.usuarioAuth.imagem;
+      this.usuario.password = this.usuarioAuth.password;
     }
   },
 }

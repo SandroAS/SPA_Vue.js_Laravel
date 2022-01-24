@@ -58,6 +58,8 @@ Route::post('/login', function (Request $request) {
     if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
         $user = auth()->user();
         $user->token = $user->createToken($user->email)->accessToken;
+        $url = 'storage' .  DIRECTORY_SEPARATOR . 'perfis' . $user->imagem;
+        $user->imagem = asset($url);
         return $user;
     } else {
         return ['status' => 'false'];
@@ -95,6 +97,41 @@ Route::middleware('auth:api')->put('/perfil', function (Request $request) {
     }
 
     if(isset($data['imagem'])){
+
+        Validator::extend('base64image', function ($attribute, $value, $parameters, $validator) {
+            $explode = explode(',', $value);
+            $allow = ['png', 'jpg', 'svg','jpeg'];
+            $format = str_replace(
+                [
+                    'data:image/',
+                    ';',
+                    'base64',
+                ],
+                [
+                    '', '', '',
+                ],
+                $explode[0]
+            );
+            // check file format
+            if (!in_array($format, $allow)) {
+                return false;
+            }
+            // check base64 format
+            if (!preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $explode[1])) {
+                return false;
+            }
+            return true;
+        });
+
+        $valiacao = Validator::make($data, [
+            'imagem' => 'base64image',
+
+        ],['base64image'=>'Imagem inválida']);
+
+        if($valiacao->fails()){
+          return $valiacao->errors();
+        }
+
         $time = time();
         $diretorioPai = 'public' . DIRECTORY_SEPARATOR . 'perfis';
         $diretorioFilho = DIRECTORY_SEPARATOR . 'perfil_id-' . $user->id;
