@@ -101,13 +101,21 @@ Route::middleware('auth:api')->put('/perfil', function (Request $request) {
         $ext = substr($data['imagem'], 11, strpos($data['imagem'], ';') - 11);
         $nomeImagem = DIRECTORY_SEPARATOR . $time . '.' . $ext;
         $urlImagem = $diretorioPai . $diretorioFilho . $nomeImagem;
+        $diretorioStorage = 'storage' .  DIRECTORY_SEPARATOR . 'perfis';
 
         $file = str_replace('data:image/' . $ext . ';base64,', '', $data['imagem']);
         $file = base64_decode($file);
 
+        if($user->imagem){
+            $rotaPublic = public_path() . DIRECTORY_SEPARATOR . $diretorioStorage . $user->imagem;
+            if(file_exists($rotaPublic)) {
+                $rotaStorage = $diretorioPai . $user->imagem;
+                Storage::delete($rotaStorage);
+            }
+        }
+
         Storage::put($urlImagem, $file);
 
-        $diretorioStorage = 'storage' .  DIRECTORY_SEPARATOR . 'perfis';
         $url = $diretorioStorage . $diretorioFilho . $nomeImagem;
         $user->imagem = $diretorioFilho . $nomeImagem;
     }
