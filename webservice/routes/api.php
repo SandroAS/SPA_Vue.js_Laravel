@@ -98,10 +98,9 @@ Route::middleware('auth:api')->put('/perfil', function (Request $request) {
         $time = time();
         $diretorioPai = 'public' . DIRECTORY_SEPARATOR . 'perfis';
         $diretorioFilho = DIRECTORY_SEPARATOR . 'perfil_id-' . $user->id;
-        $diretorioImagem = $diretorioPai . $diretorioFilho;
         $ext = substr($data['imagem'], 11, strpos($data['imagem'], ';') - 11);
         $nomeImagem = DIRECTORY_SEPARATOR . $time . '.' . $ext;
-        $urlImagem = $diretorioImagem . $nomeImagem;
+        $urlImagem = $diretorioPai . $diretorioFilho . $nomeImagem;
 
         $file = str_replace('data:image/' . $ext . ';base64,', '', $data['imagem']);
         $file = base64_decode($file);
@@ -110,11 +109,12 @@ Route::middleware('auth:api')->put('/perfil', function (Request $request) {
 
         $diretorioStorage = 'storage' .  DIRECTORY_SEPARATOR . 'perfis';
         $url = $diretorioStorage . $diretorioFilho . $nomeImagem;
-        $user->imagem = asset($url);
+        $user->imagem = $diretorioFilho . $nomeImagem;
     }
 
     $user->save();
 
+    $user->imagem = asset($url);
     $user->token = $user->createToken($user->email)->accessToken;
     return $user;
 });
