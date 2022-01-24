@@ -2,7 +2,7 @@
   <SiteTemplate>
 
     <span slot="menuesquerdo">
-      <img class="responsive-img" src="https://assets.bizcapital.com.br/staging-blog/uploads/20190603184146/Img_Redes_Sociais_para_Neg%C3%B3cios_2-2-585x350.jpg" alt="Capa Login">
+      <img class="responsive-img" :src="usuario.imagem" alt="Capa Login">
     </span>
     <span slot="principal">
       <h2>Perfil</h2>
@@ -11,8 +11,8 @@
       <input type="email" placeholder="E-mail" v-model="usuario.email">
         <div class="file-field input-field">
           <div class="btn">
-            <span>File</span>
-            <input type="file">
+            <span>Imagem</span>
+            <input type="file" @change="salvarImagem">
           </div>
           <div class="file-path-wrapper">
             <input class="file-path validate" type="text" autocomplete="off">
@@ -21,7 +21,6 @@
       <input type="password" placeholder="Senha" v-model="usuario.password" autocomplete="off">
       <input type="password" placeholder="Confirme sua Senha" v-model="usuario.password_confirmation" autocomplete="new-password">
       <button type="button" class="btn" @click="perfil()">Atualizar</button>
-
     </span>
 
   </SiteTemplate>
@@ -39,7 +38,9 @@ export default {
     return {
       usuarioAuth: false,
       usuario: {
+        name: "",
         email: "",
+        imagem: "",
         password: "",
       }
     }
@@ -50,22 +51,36 @@ export default {
       this.usuarioAuth = JSON.parse(uauarioAux);
       this.usuario.name = this.usuarioAuth.name;
       this.usuario.email = this.usuarioAuth.email;
+      this.usuario.imagem = this.usuarioAuth.imagem;
       this.usuario.password = this.usuarioAuth.password;
     }
   },
   methods: {
+    salvarImagem(evt) {
+      let arquivo = evt.target.files || evt.dataTransfer.files;
+      if(!arquivo.length){
+        return;
+      }
+      let reader = new FileReader();
+      reader.onloadend = (evt) => {
+        this.usuario.imagem = evt.target.result;
+      };
+      reader.readAsDataURL(arquivo[0]);
+    },
     perfil() {
-      axios.put('http://127.0.0.1:8000/api/perfil', {
+      axios.put(`http://127.0.0.1:8000/api/perfil`, {
         name: this.usuario.name,
         email: this.usuario.email,
+        imagem: this.usuario.imagem,
         password: this.usuario.password,
         password_confirmation: this.usuario.password_confirmation,
       }, {
         headers: {
-          "authorization": "Bearer " + this.usuarioAuth.token
+          "Authorization": "Bearer " + this.usuarioAuth.token
         }
       }).then((response) => {
         if(response.data.token){
+          this.usuario = response.data;
           sessionStorage.setItem('usuario', JSON.stringify(response.data))
           alert("Perfil do usuário atualizado com sucesso!");
         } else {
