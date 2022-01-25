@@ -2,7 +2,6 @@
 
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
@@ -32,39 +31,22 @@ Route::post('/cadastro', function (Request $request) {
         return $validacao->errors();
     }
 
+    $imagem = "/img/perfil_padrao.jpg";
+
     $user = User::create([
         'name' => $data['name'],
         'email' => $data['email'],
         'password' => Hash::make($data['password']),
+        'imagem' => $imagem ,
     ]);
 
     $user->token = $user->createToken($user->email)->accessToken;
+    $user->imagem = asset($user->imagem);
 
     return $user;
 });
 
-Route::post('/login', function (Request $request) {
-    $data = $request->all();
-
-    $validacao = Validator::make($data, [
-        'email' => ['required', 'string', 'email', 'max:255'],
-        'password' => ['required', 'string'],
-    ]);
-
-    if($validacao->fails()){
-        return $validacao->errors();
-    }
-
-    if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
-        $user = auth()->user();
-        $user->token = $user->createToken($user->email)->accessToken;
-        $url = 'storage' .  DIRECTORY_SEPARATOR . 'perfis' . $user->imagem;
-        $user->imagem = asset($url);
-        return $user;
-    } else {
-        return ['status' => 'false'];
-    }
-});
+Route::post('/login', 'UsuarioController@login');
 
 Route::middleware('auth:api')->get('/usuario', function (Request $request) {
     return $request->user();
