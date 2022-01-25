@@ -14,9 +14,12 @@ class CreateAmigosTable extends Migration
     public function up()
     {
         Schema::create('amigos', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('amigo_id')->unsigned();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('amigo_id')->references('id')->on('users')->onDelete('cascade');
+          });
     }
 
     /**

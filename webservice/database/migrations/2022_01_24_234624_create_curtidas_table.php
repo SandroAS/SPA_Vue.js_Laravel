@@ -14,9 +14,12 @@ class CreateCurtidasTable extends Migration
     public function up()
     {
         Schema::create('curtidas', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('conteudo_id')->unsigned();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('conteudo_id')->references('id')->on('conteudos')->onDelete('cascade');
+          });
     }
 
     /**
