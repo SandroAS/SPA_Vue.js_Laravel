@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Conteudo;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -173,14 +174,30 @@ class UsuarioController extends Controller
         //     'texto' => 'Aqui o texto',
         //     'imagem' => 'url da imagem',
         //     'link' => 'Link',
-        //     'data' => '2018-05-10' //date('Y-m-d');
+        //     'data' => '2018-05-10' //date('Y-m-d')
         // ]);
         // return $user->conteudos;
 
         // $user->amigos()->attach($user2->id);
         // $user->amigos()->detach($user2->id);
-        $user->amigos()->toggle($user2->id);
+        // $user->amigos()->toggle($user2->id);
 
-        return $user->amigos;
+        $conteudo = Conteudo::find(1);
+        // $user->curtidas()->toggle($conteudo);
+
+        // return $user->curtidas;
+        // return $user->curtidas()->count();
+
+        $user->comentarios()->create([
+            'conteudo_id' => $conteudo->id,
+            'texto' => 'Show de bola!',
+            'data' => date('Y-m-d')
+        ]);
+        $user2->comentarios()->create([
+            'conteudo_id' => $conteudo->id,
+            'texto' => 'Não gostei.',
+            'data' => date('Y-m-d')
+        ]);
+        return $conteudo->comentarios;
     }
 }

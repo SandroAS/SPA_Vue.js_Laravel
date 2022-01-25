@@ -12,7 +12,7 @@ class Comentario extends Model
      * @var array
      */
     protected $fillable = [
-        'texto', 'data'
+       'conteudo_id', 'texto', 'data'
     ];
 
     public function user()
