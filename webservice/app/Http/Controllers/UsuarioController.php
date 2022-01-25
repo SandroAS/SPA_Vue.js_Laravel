@@ -167,8 +167,8 @@ class UsuarioController extends Controller
 
     public function testes()
     {
-        $user = User::find(1);
-        $user2 = User::find(2);
+        // $user = User::find(1);
+        // $user2 = User::find(2);
         // $user->conteudos()->create([
         //     'titulo' => 'Conteúdo 3',
         //     'texto' => 'Aqui o texto',
@@ -182,22 +182,22 @@ class UsuarioController extends Controller
         // $user->amigos()->detach($user2->id);
         // $user->amigos()->toggle($user2->id);
 
-        $conteudo = Conteudo::find(1);
+        // $conteudo = Conteudo::find(1);
         // $user->curtidas()->toggle($conteudo);
 
         // return $user->curtidas;
         // return $user->curtidas()->count();
 
-        $user->comentarios()->create([
-            'conteudo_id' => $conteudo->id,
-            'texto' => 'Show de bola!',
-            'data' => date('Y-m-d')
-        ]);
-        $user2->comentarios()->create([
-            'conteudo_id' => $conteudo->id,
-            'texto' => 'Não gostei.',
-            'data' => date('Y-m-d')
-        ]);
+        // $user->comentarios()->create([
+        //     'conteudo_id' => $conteudo->id,
+        //     'texto' => 'Show de bola!',
+        //     'data' => date('Y-m-d')
+        // ]);
+        // $user2->comentarios()->create([
+        //     'conteudo_id' => $conteudo->id,
+        //     'texto' => 'Não gostei.',
+        //     'data' => date('Y-m-d')
+        // ]);
         return $conteudo->comentarios;
     }
 }
