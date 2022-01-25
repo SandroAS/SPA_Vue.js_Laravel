@@ -79,13 +79,13 @@ export default {
           "Authorization": "Bearer " + this.usuarioAuth.token
         }
       }).then((response) => {
-        if(response.data.token){
-          this.usuario = response.data;
-          sessionStorage.setItem('usuario', JSON.stringify(response.data))
+        if(response.data.status){
+          this.usuario = response.data.usuario;
+          sessionStorage.setItem('usuario', JSON.stringify(response.data.usuario))
           alert("Perfil do usuário atualizado com sucesso!");
-        } else {
+        } else if(response.data.status == false && response.data.validacao) {
           let errors = "";
-          for (let error of Object.values(response.data)){
+          for (let error of Object.values(response.data.erros)){
             errors += error + " ";
           }
           alert(errors);

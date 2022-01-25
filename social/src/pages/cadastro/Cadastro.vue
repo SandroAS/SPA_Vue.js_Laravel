@@ -44,18 +44,18 @@ export default {
         password: this.usuario.password,
         password_confirmation: this.usuario.password_confirmation,
       }).then((response) => {
-        if(response.data.token){
+        if(response.data.status){
           alert("Cadastro realizado com sucesso!");
-          sessionStorage.setItem('usuario', JSON.stringify(response.data))
+          sessionStorage.setItem('usuario', JSON.stringify(response.data.usuario))
           this.$router.push('/')
-        } else if(response.data.status == false) {
-          alert("Erro no cadastro! Tente novamente mais tarde.");
-        } else {
+        } else if(response.data.status == false && response.data.validacao) {
           let errors = "";
-          for (let error of Object.values(response.data)){
+          for (let error of Object.values(response.data.erros)){
             errors += error + " ";
           }
           alert(errors);
+        } else {
+          alert("Erro no cadastro! Tente novamente mais tarde.");
         }
       }).catch((error) => {
         console.error(error);

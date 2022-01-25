@@ -38,15 +38,15 @@ export default {
         email: this.usuario.email,
         password: this.usuario.password,
       }).then((response) => {
-        if(response.data.token){
+        if(response.data.status){
           alert("Login realizado com sucesso!");
-          sessionStorage.setItem('usuario', JSON.stringify(response.data))
+          sessionStorage.setItem('usuario', JSON.stringify(response.data.usuario))
           this.$router.push('/')
-        } else if(response.data.status == false) {
+        } else if(response.data.status == false && response.data.validacao) {
           alert("Login não existe!!");
         } else {
           let errors = "";
-          for (let error of Object.values(response.data)){
+          for (let error of Object.values(response.data.erros)){
             errors += error + " ";
           }
           alert(errors);

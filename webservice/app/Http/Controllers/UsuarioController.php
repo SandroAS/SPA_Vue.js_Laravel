@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -22,7 +23,7 @@ class UsuarioController extends Controller
         ]);
 
         if($validacao->fails()){
-            return $validacao->errors();
+            return ['status' => false, "validacao" => true, "erros" => $validacao->errors()];
         }
 
         if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
@@ -30,9 +31,9 @@ class UsuarioController extends Controller
             $user->token = $user->createToken($user->email)->accessToken;
             $user->imagem === "/img/perfil_padrao.jpg" ? $url = $user->imagem : $url = 'storage' .  DIRECTORY_SEPARATOR . 'perfis' . $user->imagem;
             $user->imagem = asset($url);
-            return $user;
+            return ['status' => true, "usuario" => $user];
         } else {
-            return ['status' => 'false'];
+            return ['status' => false];
         }
     }
 
@@ -47,7 +48,7 @@ class UsuarioController extends Controller
         ]);
 
         if($validacao->fails()){
-            return $validacao->errors();
+            return ['status' => false, "validacao" => true, "erros" => $validacao->errors()];
         }
 
         $imagem = "/img/perfil_padrao.jpg";
@@ -56,18 +57,13 @@ class UsuarioController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'imagem' => $imagem ,
+            'imagem' => $imagem
         ]);
 
         $user->token = $user->createToken($user->email)->accessToken;
         $user->imagem = asset($user->imagem);
 
-        return $user;
-    }
-
-    public function usuario(Request $request)
-    {
-        return $request->user();
+        return ['status' => true, "usuario" => $user];
     }
 
     public function perfil(Request $request)
@@ -82,7 +78,7 @@ class UsuarioController extends Controller
                 'password' => 'required|string|min:6|confirmed',
             ]);
             if($validacao->fails()){
-                return $validacao->errors();
+                return ['status' => false, "validacao" => true, "erros" => $validacao->errors()];
             }
             $user->password = Hash::make($data['password']);
         } else {
@@ -91,7 +87,7 @@ class UsuarioController extends Controller
                 'email' => ['required','string','email','max:255',Rule::unique('users')->ignore($user->id)],
             ]);
             if($validacao->fails()){
-                return $validacao->errors();
+                return ['status' => false, "validacao" => true, "erros" => $validacao->errors()];
             }
             $user->name = $data['name'];
             $user->email = $data['email'];
@@ -130,7 +126,7 @@ class UsuarioController extends Controller
             ],['base64image'=>'Imagem inválida']);
 
             if($valiacao->fails()){
-            return $valiacao->errors();
+                return ['status' => false, "validacao" => true, "erros" => $validacao->errors()];
             }
 
             $time = time();
@@ -144,7 +140,7 @@ class UsuarioController extends Controller
             $file = str_replace('data:image/' . $ext . ';base64,', '', $data['imagem']);
             $file = base64_decode($file);
 
-            if($user->imagem){
+            if($user->imagem && $user->imagem !== "/img/perfil_padrao.jpg"){
                 $rotaPublic = public_path() . DIRECTORY_SEPARATOR . $diretorioStorage . $user->imagem;
                 if(file_exists($rotaPublic)) {
                     $rotaStorage = $diretorioPai . $user->imagem;
@@ -162,7 +158,7 @@ class UsuarioController extends Controller
 
         $user->imagem = asset($url);
         $user->token = $user->createToken($user->email)->accessToken;
-        return $user;
+        return ['status' => true, "usuario" => $user];
     }
 
     public function testes()
