@@ -1,11 +1,14 @@
 <template>
   <div class="row">
     <GridVue class="input-field" tamanho="12">
-      <textarea v-model="conteudo" class="materialize-textarea"></textarea>
+      <input type="text" v-model="conteudo.titulo">
+      <textarea v-if="conteudo.titulo" placeholder="Conteúdo" v-model="conteudo.texto" class="materialize-textarea"></textarea>
+      <input v-if="conteudo.titulo && conteudo.texto" type="text" placeholder="Link" v-model="conteudo.titulo">
+      <input v-if="conteudo.titulo && conteudo.texto" type="text" placeholder="Url da imagem" v-model="conteudo.titulo">
       <label>O que esta acontecendo?</label>
     </GridVue>
     <p>
-      <GridVue tamanho="2 offset-s10" class="btn waves-effect waves-light">Publicar</GridVue>
+      <GridVue v-if="conteudo.titulo && conteudo.texto" tamanho="2 offset-s10" class="btn waves-effect waves-light">Publicar</GridVue>
     </p>
   </div>
 </template>
@@ -20,7 +23,12 @@ export default {
   },
   data () {
     return {
-      conteudo: "",
+      conteudo: {
+        titulo: "",
+        texto: "",
+        link: "",
+        imagem: ""
+      },
     }
   }
 }
