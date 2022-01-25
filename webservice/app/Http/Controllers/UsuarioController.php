@@ -166,7 +166,8 @@ class UsuarioController extends Controller
 
     public function testes()
     {
-        // $user = User::find(1);
+        $user = User::find(1);
+        $user2 = User::find(2);
         // $user->conteudos()->create([
         //     'titulo' => 'Conteúdo 3',
         //     'texto' => 'Aqui o texto',
@@ -175,5 +176,11 @@ class UsuarioController extends Controller
         //     'data' => '2018-05-10' //date('Y-m-d');
         // ]);
         // return $user->conteudos;
+
+        // $user->amigos()->attach($user2->id);
+        // $user->amigos()->detach($user2->id);
+        $user->amigos()->toggle($user2->id);
+
+        return $user->amigos;
     }
 }
