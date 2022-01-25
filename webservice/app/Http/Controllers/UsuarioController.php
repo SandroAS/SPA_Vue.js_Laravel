@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -161,5 +162,18 @@ class UsuarioController extends Controller
         $user->imagem = asset($url);
         $user->token = $user->createToken($user->email)->accessToken;
         return $user;
+    }
+
+    public function testes()
+    {
+        // $user = User::find(1);
+        // $user->conteudos()->create([
+        //     'titulo' => 'Conteúdo 3',
+        //     'texto' => 'Aqui o texto',
+        //     'imagem' => 'url da imagem',
+        //     'link' => 'Link',
+        //     'data' => '2018-05-10' //date('Y-m-d');
+        // ]);
+        // return $user->conteudos;
     }
 }
