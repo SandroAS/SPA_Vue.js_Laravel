@@ -163,16 +163,7 @@ class UsuarioController extends Controller
 
     public function testes()
     {
-        // $user = User::find(1);
-        // $user2 = User::find(2);
-        // $user->conteudos()->create([
-        //     'titulo' => 'Conteúdo 3',
-        //     'texto' => 'Aqui o texto',
-        //     'imagem' => 'url da imagem',
-        //     'link' => 'Link',
-        //     'data' => '2018-05-10' //date('Y-m-d')
-        // ]);
-        // return $user->conteudos;
+        
 
         // $user->amigos()->attach($user2->id);
         // $user->amigos()->detach($user2->id);
@@ -194,6 +185,6 @@ class UsuarioController extends Controller
         //     'texto' => 'Não gostei.',
         //     'data' => date('Y-m-d')
         // ]);
-        return $conteudo->comentarios;
+        // return $conteudo->comentarios;
     }
 }

@@ -18,8 +18,8 @@ class CreateConteudosTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->string('titulo');
             $table->longText('texto');
-            $table->string('imagem');
-            $table->string('link');
+            $table->string('imagem')->nullable();
+            $table->string('link')->nullable();
             $table->dateTime('data');
             $table->timestamps();
 
