@@ -16,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('/cadastro', 'UsuarioController@cadastro');
 Route::post('/login', 'UsuarioController@login');
 Route::middleware('auth:api')->put('/perfil', 'UsuarioController@perfil');
-Route::post('/conteudo/adicionar', 'ConteudoController@adicionar');
+Route::middleware('auth:api')->post('/conteudo/adicionar', 'ConteudoController@adicionar');
 
 Route::get('/testes', 'UsuarioController@testes');

@@ -8,13 +8,13 @@
         <GridVue tamanho="8">
           <span class="black-text">
             <h4>{{ usuario.name }}</h4>
-            
+
           </span>
         </GridVue>
       </div>
     </span>
     <span slot="principal">
-      <PublicarConteudoVue/>
+      <PublicarConteudoVue :usuario="usuario"/>
       <CardConteudoVue
         :perfil="usuario.imagem"
         :nome="usuario.name"
@@ -60,6 +60,7 @@ export default {
       this.usuario.email = this.usuarioAuth.email;
       this.usuario.imagem = this.usuarioAuth.imagem;
       this.usuario.password = this.usuarioAuth.password;
+      this.usuario.token = this.usuarioAuth.token;
     }
   },
 }

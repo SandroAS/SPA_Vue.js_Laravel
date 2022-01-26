@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Conteudo;
 use Illuminate\Http\Request;
+use stdClass;
 
 class ConteudoController extends Controller
 {
@@ -11,7 +13,7 @@ class ConteudoController extends Controller
         $data = $request->all();
         $user = $request->user();
 
-        $conteudo = new Conteudo;
+        $conteudo = new Conteudo();
 
         $conteudo->titulo = $data['titulo'];
         $conteudo->texto = $data['texto'];
@@ -20,7 +22,10 @@ class ConteudoController extends Controller
         $conteudo->data = date('Y-m-d H:i:s');
 
         $user->conteudos()->save($conteudo);
-
+        // $objeto = new stdClass();
+        // $objeto->usuario = $user;
+        // $objeto->usuario->content = $user->conteudos;
+        // dd($objeto);
         return ['status' => true, "conteudos" => $user->conteudos()];
     }
 }

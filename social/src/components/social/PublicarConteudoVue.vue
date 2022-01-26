@@ -17,7 +17,7 @@
 import GridVue from '@/components/layouts/GridVue'
 export default {
   name: "PublicarConteudoVue",
-  props: [],
+  props: ['usuario'],
   components: {
     GridVue
   },
@@ -35,12 +35,13 @@ export default {
     addConteudo(){
       this.$http.post(this.$urlAPI + `conteudo/adicionar`, this.conteudo, {
         headers: {
-          "Authorization": "Bearer " + this.usuarioAuth.token
+          "Authorization": "Bearer " + this.usuario.token
         }
       }).then((response) => {
         if(response.data.status){
           this.conteudo = response.data.conteudo;
           alert("Conteúdo cadastrado com sucesso!");
+          this.resetaConteudo();
         } else if(response.data.status == false && response.data.validacao) {
           let errors = "";
           for (let error of Object.values(response.data.erros)){
@@ -52,6 +53,14 @@ export default {
         console.error(error);
         alert("Erro! Tente novamente mais tarde.")
       })
+    },
+    resetaConteudo(){
+      this.conteudo = {
+        titulo: "",
+        texto: "",
+        link: "",
+        imagem: ""
+      }
     }
   }
 }
