@@ -46,13 +46,8 @@ export default {
     }
   },
   created(){
-    let uauarioAux = sessionStorage.getItem('usuario')
-    if(uauarioAux){
-      this.usuarioAuth = JSON.parse(uauarioAux);
-      this.usuario.name = this.usuarioAuth.name;
-      this.usuario.email = this.usuarioAuth.email;
-      this.usuario.imagem = this.usuarioAuth.imagem;
-      this.usuario.password = this.usuarioAuth.password;
+    if(this.$store.getters.getUsuario){
+      this.usuario = JSON.parse(this.$store.getters.getUsuario);
     }
   },
   methods: {
@@ -68,15 +63,9 @@ export default {
       reader.readAsDataURL(arquivo[0]);
     },
     perfil() {
-      this.$http.put(this.$urlAPI + `perfil`, {
-        name: this.usuario.name,
-        email: this.usuario.email,
-        imagem: this.usuario.imagem,
-        password: this.usuario.password,
-        password_confirmation: this.usuario.password_confirmation,
-      }, {
+      this.$http.put(this.$urlAPI + `perfil`, this.usuario, {
         headers: {
-          "Authorization": "Bearer " + this.usuarioAuth.token
+          "Authorization": "Bearer " + this.usuario.token
         }
       }).then((response) => {
         if(response.data.status){

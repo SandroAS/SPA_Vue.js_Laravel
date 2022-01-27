@@ -14,7 +14,7 @@
       </div>
     </span>
     <span slot="principal">
-      <PublicarConteudoVue :usuario="usuario"/>
+      <PublicarConteudoVue/>
       <CardConteudoVue
         :perfil="usuario.imagem"
         :nome="usuario.name"
@@ -53,14 +53,8 @@ export default {
     }
   },
   created(){
-    let uauarioAux = sessionStorage.getItem('usuario')
-    if(uauarioAux){
-      this.usuarioAuth = JSON.parse(uauarioAux);
-      this.usuario.name = this.usuarioAuth.name;
-      this.usuario.email = this.usuarioAuth.email;
-      this.usuario.imagem = this.usuarioAuth.imagem;
-      this.usuario.password = this.usuarioAuth.password;
-      this.usuario.token = this.usuarioAuth.token;
+    if(this.$store.getters.getUsuario){
+      this.usuario = JSON.parse(this.$store.getters.getUsuario);
     }
   },
 }
