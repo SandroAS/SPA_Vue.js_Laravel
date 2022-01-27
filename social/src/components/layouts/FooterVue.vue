@@ -16,7 +16,7 @@
     </div>
     <div class="footer-copyright">
       <div class="container">
-      © {{ ano || '2018' }} Copyright {{ logo || 'Site' }}
+      © {{ ano || '2022' }} Copyright {{ logo || 'Site' }}
       
       </div>
     </div>

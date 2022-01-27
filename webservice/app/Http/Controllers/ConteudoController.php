@@ -21,11 +21,8 @@ class ConteudoController extends Controller
         $conteudo->imagem = $data['imagem'];
         $conteudo->data = date('Y-m-d H:i:s');
 
-        $user->conteudos()->save($conteudo);
-        // $objeto = new stdClass();
-        // $objeto->usuario = $user;
-        // $objeto->usuario->content = $user->conteudos;
-        // dd($objeto);
-        return ['status' => true, "conteudos" => $user->conteudos()];
+        $conteudoSalvo = $user->conteudos()->save($conteudo);
+
+        return ['status' => true, "conteudos" => $conteudoSalvo];
     }
 }
