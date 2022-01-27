@@ -52,15 +52,15 @@ export default {
     }
   },
   created(){
-    let uauarioAux = sessionStorage.getItem('usuario')
-    if(uauarioAux){
-      this.usuario = JSON.parse(uauarioAux);
+    if(this.$store.getters.getUsuario){
+      this.usuario = JSON.parse(this.$store.getters.getUsuario);
     } else {
       this.$router.push('/login')
     }
   },
   methods: {
     sair(){
+      this.$store.commit('setUsuario', null);
       sessionStorage.clear();
       this.usuario = false;
       this.$router.push('/login')

@@ -46,6 +46,7 @@ export default {
       }).then((response) => {
         if(response.data.status){
           alert("Cadastro realizado com sucesso!");
+          this.$store.commit('setUsuario', response.data.usuario);
           sessionStorage.setItem('usuario', JSON.stringify(response.data.usuario))
           this.$router.push('/')
         } else if(response.data.status == false && response.data.validacao) {

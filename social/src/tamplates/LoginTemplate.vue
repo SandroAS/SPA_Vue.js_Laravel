@@ -47,16 +47,9 @@ export default {
     }
   },
   created(){
-    let uauarioAux = sessionStorage.getItem('usuario')
-    if(uauarioAux){
-      this.usuario = JSON.parse(uauarioAux);
+    if(this.$store.getters.getUsuario){
+      this.usuario = JSON.parse(this.$store.getters.getUsuario);
       this.$router.push('/')
-    }
-  },
-  methods: {
-    sair(){
-      sessionStorage.clear();
-      this.usuario = false;
     }
   }
 }
