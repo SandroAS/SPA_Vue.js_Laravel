@@ -43,4 +43,16 @@ class ConteudoController extends Controller
 
         return ['status' => true, "conteudos" => $conteudos];
     }
+
+    public function curtir($id, Request $request)
+    {
+        $conteudo = Conteudo::find($id);
+        if($conteudo) {
+            $user = $request->user();
+            $user->curtidas()->toggle($conteudo->id);
+            return ['status' => true, "curtidas" => $conteudo->curtidas->count()];
+        } else {
+            return ['status' => false, "erro" => "Conteúdo não existe!"];
+        }
+    }
 }
