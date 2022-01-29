@@ -92,71 +92,42 @@ class UsuarioController extends Controller
             $user->name = $data['name'];
             $user->email = $data['email'];
         }
-
         if(isset($data['imagem'])){
 
-            Validator::extend('base64image', function ($attribute, $value, $parameters, $validator) {
-                $explode = explode(',', $value);
-                $allow = ['png', 'jpg', 'svg','jpeg'];
-                $format = str_replace(
-                    [
-                        'data:image/',
-                        ';',
-                        'base64',
-                    ],
-                    [
-                        '', '', '',
-                    ],
-                    $explode[0]
-                );
-                // check file format
-                if (!in_array($format, $allow)) {
-                    return false;
-                }
-                // check base64 format
-                if (!preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $explode[1])) {
-                    return false;
-                }
-                return true;
-            });
 
-            $valiacao = Validator::make($data, [
-                'imagem' => 'base64image',
+            $valiacaoImagem = $this->validaImagem($data['imagem']);
 
-            ],['base64image'=>'Imagem inválida']);
-
-            if($valiacao->fails()){
-                return ['status' => false, "validacao" => true, "erros" => $validacao->errors()];
+            if(!$valiacaoImagem){
+                return ['status' => false, "validacao" => true, "erros" => ['base64image'=>'Imagem inválida']];
             }
-
             $time = time();
             $diretorioPai = 'public' . DIRECTORY_SEPARATOR . 'perfis';
             $diretorioFilho = DIRECTORY_SEPARATOR . 'perfil_id-' . $user->id;
             $ext = substr($data['imagem'], 11, strpos($data['imagem'], ';') - 11);
             $nomeImagem = DIRECTORY_SEPARATOR . $time . '.' . $ext;
             $urlImagem = $diretorioPai . $diretorioFilho . $nomeImagem;
-            $diretorioStorage = 'storage' .  DIRECTORY_SEPARATOR . 'perfis';
-
+            
             $file = str_replace('data:image/' . $ext . ';base64,', '', $data['imagem']);
             $file = base64_decode($file);
 
-            if($user->imagem && $user->imagem !== DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "perfil_padrao.jpg"){
-                $rotaPublic = public_path() . DIRECTORY_SEPARATOR . $diretorioStorage . $user->imagem;
+            $imgUser = str_replace(asset('/'), DIRECTORY_SEPARATOR, $user->imagem);
+
+            if($imgUser && $imgUser !== DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "perfil_padrao.jpg"){
+                $rotaPublic = public_path() . $imgUser;
                 if(file_exists($rotaPublic)) {
-                    $rotaStorage = $diretorioPai . $user->imagem;
+                    $rotaStorage = str_replace(DIRECTORY_SEPARATOR . 'storage', DIRECTORY_SEPARATOR . 'public', $imgUser);
                     Storage::delete($rotaStorage);
                 }
             }
 
             Storage::put($urlImagem, $file);
-
-            $url = $diretorioStorage . $diretorioFilho . $nomeImagem;
+            // $url = $diretorioStorage . $diretorioFilho . $nomeImagem;
             $user->imagem = $diretorioFilho . $nomeImagem;
         }
 
         $user->save();
 
-        $user->imagem = asset($url);
+        // $user->imagem = asset($url);
         $user->token = $user->createToken($user->email)->accessToken;
         return ['status' => true, "usuario" => $user];
     }
@@ -186,5 +157,31 @@ class UsuarioController extends Controller
         //     'data' => date('Y-m-d')
         // ]);
         // return $conteudo->comentarios;
+    }
+
+    public function validaImagem($imagem){
+        $explode = explode(',', $imagem);
+        $allow = ['png', 'jpg', 'svg','jpeg'];
+        $format = str_replace(
+            [
+                'data:image/',
+                ';',
+                'base64',
+            ],
+            [
+                '', '', '',
+            ],
+            $explode[0]
+        );
+        // check file format
+        if (!in_array($format, $allow)) {
+            return false;
+        }
+        // check base64 format
+        if (!preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $explode[1])) {
+            return false;
+        }
+
+        return true;
     }
 }
