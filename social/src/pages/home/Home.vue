@@ -17,6 +17,7 @@
       <PublicarConteudoVue/>
       <CardConteudoVue
         v-for="conteudo in listaConteudos" :key="conteudo.id"
+        :id="conteudo.id"
         :perfil="conteudo.user.imagem"
         :nome="conteudo.user.name"
         :data="conteudo.data"
