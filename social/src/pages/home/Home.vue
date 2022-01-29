@@ -17,6 +17,7 @@
       <PublicarConteudoVue/>
       <CardConteudoVue
         v-for="conteudo in listaConteudos" :key="conteudo.id"
+        :totalcomentarios="conteudo.total_comentarios"
         :curtiuconteudo="conteudo.curtiu_conteudo"
         :totalcurtidas="conteudo.total_curtidas"
         :id="conteudo.id"

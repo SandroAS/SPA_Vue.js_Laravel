@@ -20,7 +20,7 @@
             <i class="material-icons">{{ curtiu }}</i>{{ totalCurtidas }}
           </a>
           <a style="cursor: pointer;" @click="abreComentarios(id)">
-            <i class="material-icons">insert_comment</i>{{ 22 }}
+            <i class="material-icons">insert_comment</i>{{ totalComentarios }}
           </a>
         </p>
         <p v-if="exibirComentario" class="right-align">
@@ -58,12 +58,13 @@ export default {
   components:{
     GridVue
   },
-  props:['curtiuconteudo', 'totalcurtidas', 'id', 'perfil','nome','data'],
+  props:['totalcomentarios', 'curtiuconteudo', 'totalcurtidas', 'id', 'perfil','nome','data'],
   data () {
     return {
       curtiu: this.curtiuconteudo ? 'favorite' : 'favorite_border',
       totalCurtidas: this.totalcurtidas,
-      exibirComentario: false
+      exibirComentario: false,
+      totalComentarios: this.totalcomentarios
     }
   },
   created(){
