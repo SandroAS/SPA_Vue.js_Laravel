@@ -19,7 +19,7 @@ class CreateConteudosTable extends Migration
             $table->string('titulo');
             $table->longText('texto');
             $table->string('imagem')->nullable();
-            $table->string('link')->nullable();
+            $table->text('link')->nullable();
             $table->dateTime('data');
             $table->timestamps();
 

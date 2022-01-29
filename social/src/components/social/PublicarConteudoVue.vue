@@ -25,8 +25,8 @@ export default {
       conteudo: {
         titulo: "",
         texto: "",
-        link: "",
-        imagem: ""
+        link: null,
+        imagem: null
       },
     }
   },
