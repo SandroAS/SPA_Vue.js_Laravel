@@ -8,6 +8,13 @@ use stdClass;
 
 class ConteudoController extends Controller
 {
+    public function lista(Request $request)
+    {
+        $conteudos = Conteudo::with('user')->orderBy('data', 'DESC')->paginate(5);
+        // dd($conteudos);
+        return ['status' => true, "conteudos" => $conteudos];
+    }
+
     public function adicionar(Request $request)
     {
         $data = $request->all();

@@ -29,8 +29,8 @@ class UsuarioController extends Controller
         if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
             $user = auth()->user();
             $user->token = $user->createToken($user->email)->accessToken;
-            $user->imagem === "/img/perfil_padrao.jpg" ? $url = $user->imagem : $url = 'storage' .  DIRECTORY_SEPARATOR . 'perfis' . $user->imagem;
-            $user->imagem = asset($url);
+            $user->imagem === DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "perfil_padrao.jpg" ? $url = $user->imagem : $url = 'storage' .  DIRECTORY_SEPARATOR . 'perfis' . $user->imagem;
+            // $user->imagem = asset($url);
             return ['status' => true, "usuario" => $user];
         } else {
             return ['status' => false];
@@ -51,7 +51,7 @@ class UsuarioController extends Controller
             return ['status' => false, "validacao" => true, "erros" => $validacao->errors()];
         }
 
-        $imagem = "/img/perfil_padrao.jpg";
+        $imagem = DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "perfil_padrao.jpg";
 
         $user = User::create([
             'name' => $data['name'],
@@ -140,7 +140,7 @@ class UsuarioController extends Controller
             $file = str_replace('data:image/' . $ext . ';base64,', '', $data['imagem']);
             $file = base64_decode($file);
 
-            if($user->imagem && $user->imagem !== "/img/perfil_padrao.jpg"){
+            if($user->imagem && $user->imagem !== DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "perfil_padrao.jpg"){
                 $rotaPublic = public_path() . DIRECTORY_SEPARATOR . $diretorioStorage . $user->imagem;
                 if(file_exists($rotaPublic)) {
                     $rotaStorage = $diretorioPai . $user->imagem;

@@ -53,7 +53,7 @@ export default {
   },
   created(){
     if(this.$store.getters.getUsuario){
-      this.usuario = JSON.parse(this.$store.getters.getUsuario);
+      this.usuario = this.$store.getters.getUsuario;
     } else {
       this.$router.push('/login')
     }

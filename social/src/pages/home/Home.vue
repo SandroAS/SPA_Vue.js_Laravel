@@ -16,14 +16,16 @@
     <span slot="principal">
       <PublicarConteudoVue/>
       <CardConteudoVue
-        :perfil="usuario.imagem"
-        :nome="usuario.name"
-        data="13/01/18 13:30"
+        v-for="conteudo in conteudos" :key="conteudo.id"
+        :perfil="conteudo.user.imagem"
+        :nome="conteudo.user.name"
+        :data="conteudo.data"
       >
+      
         <CardDetalheVue 
-          img="http://materializecss.com/images/sample-1.jpg"
-          titulo="Card Title" txt="I am a very simple card. I am good at containing small bits of information.
-          I am convenient because I require little markup to use effectively."
+          :img="conteudo.imagem"
+          :titulo="conteudo.titulo"
+          :txt="conteudo.texto"
         />
       </CardConteudoVue>
     </span>
@@ -49,12 +51,25 @@ export default {
         email: "",
         imagem: "",
         password: "",
-      }
+      },
+      conteudos: []
     }
   },
   created(){
     if(this.$store.getters.getUsuario){
-      this.usuario = JSON.parse(this.$store.getters.getUsuario);
+      this.usuario = this.$store.getters.getUsuario;
+      this.$http.get(this.$urlAPI + `conteudo/lista`, {
+        headers: {
+          "Authorization": "Bearer " + this.usuario.token
+        }
+      }).then((response) => {
+        if(response.data.status){
+          this.conteudos = response.data.conteudos.data;
+        }
+      }).catch((error) => {
+        console.error(error);
+        alert("Erro! Tente novamente mais tarde.")
+      })
     }
   },
 }

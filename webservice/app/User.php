@@ -57,4 +57,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'amigos', 'user_id', 'amigo_id');
     }
+
+    public function getImagemAttribute($value)
+    {
+        return asset("storage" . DIRECTORY_SEPARATOR . "perfis" . $value);
+    }
 }

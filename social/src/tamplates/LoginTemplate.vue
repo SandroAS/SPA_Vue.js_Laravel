@@ -5,7 +5,6 @@
         <li v-if="!usuario"><router-link to="/login">Login</router-link></li>
         <li v-if="!usuario"><router-link to="/cadastro">Cadastre-se</router-link></li>
         <li v-if="usuario"><router-link to="/cadastro">{{ usuario.name }}</router-link></li>
-        <li v-if="usuario"><a @click="sair()">Sair</a></li>
       </NavBar>
     </header>
     <main>
@@ -48,7 +47,7 @@ export default {
   },
   created(){
     if(this.$store.getters.getUsuario){
-      this.usuario = JSON.parse(this.$store.getters.getUsuario);
+      this.usuario = this.$store.getters.getUsuario;
       this.$router.push('/')
     }
   }
