@@ -19,7 +19,32 @@
           <a style="cursor: pointer;" @click="curtida(id)">
             <i class="material-icons">{{ curtiu }}</i>{{ totalCurtidas }}
           </a>
-          <i class="material-icons">insert_comment</i>
+          <a style="cursor: pointer;" @click="abreComentarios(id)">
+            <i class="material-icons">insert_comment</i>{{ 22 }}
+          </a>
+        </p>
+        <p v-if="exibirComentario" class="right-align">
+          <input type="text" placeholder="Comentário">
+          <button class="btn waves-effect waves-light orange"><i class="material-icons">send</i></button>
+        </p>
+        <p v-if="exibirComentario">
+          <ul class="collection">
+            <li class="collection-item avatar">
+              <img src="https://materializecss.com/images/yuna.jpg" alt="" class="circle">
+              <span class="title">Maria da Silva <small> - 12h30 12/03/2018</small></span>
+              <p>Gostei desse conteúdo!</p>
+            </li>
+            <li class="collection-item avatar">
+              <img src="https://materializecss.com/images/yuna.jpg" alt="" class="circle">
+              <span class="title">Maria da Silva <small> - 12h30 12/03/2018</small></span>
+              <p>Gostei desse conteúdo!</p>
+            </li>
+            <li class="collection-item avatar">
+              <img src="https://materializecss.com/images/yuna.jpg" alt="" class="circle">
+              <span class="title">Maria da Silva <small> - 12h30 12/03/2018</small></span>
+              <p>Gostei desse conteúdo!</p>
+            </li>
+          </ul>
         </p>
       </div>
     </div>
@@ -32,14 +57,17 @@ export default {
   name: 'CardConteudoVue',
   components:{
     GridVue
-
   },
-  props:['id', 'perfil','nome','data'],
+  props:['curtiuconteudo', 'totalcurtidas', 'id', 'perfil','nome','data'],
   data () {
     return {
-      curtiu: 'favorite_border',
-      totalCurtidas: 0
+      curtiu: this.curtiuconteudo ? 'favorite' : 'favorite_border',
+      totalCurtidas: this.totalcurtidas,
+      exibirComentario: false
     }
+  },
+  created(){
+
   },
   methods: {
     curtida(id){
@@ -50,6 +78,7 @@ export default {
       }).then((response) => {
         if(response.status) {
           this.totalCurtidas = response.data.curtidas;
+          this.$store.commit('setConteudosLinhaTempo', response.data.lista.conteudos.data)
           if(this.curtiu == 'favorite_border') {
             this.curtiu = 'favorite';
           } else {
@@ -62,6 +91,9 @@ export default {
         console.error(error);
         alert("Erro! Tente novamente mais tarde.")
       })
+    },
+    abreComentarios(id){
+      this.exibirComentario = !this.exibirComentario;
     }
   }
 }
