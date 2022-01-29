@@ -16,7 +16,7 @@
     <span slot="principal">
       <PublicarConteudoVue/>
       <CardConteudoVue
-        v-for="conteudo in conteudos" :key="conteudo.id"
+        v-for="conteudo in listaConteudos" :key="conteudo.id"
         :perfil="conteudo.user.imagem"
         :nome="conteudo.user.name"
         :data="conteudo.data"
@@ -52,7 +52,6 @@ export default {
         imagem: "",
         password: "",
       },
-      conteudos: []
     }
   },
   created(){
@@ -64,7 +63,7 @@ export default {
         }
       }).then((response) => {
         if(response.data.status){
-          this.conteudos = response.data.conteudos.data;
+          this.$store.commit('setConteudosLinhaTempo', response.data.conteudos.data)
         }
       }).catch((error) => {
         console.error(error);
@@ -72,6 +71,11 @@ export default {
       })
     }
   },
+  computed: {
+    listaConteudos(){
+      return this.$store.getters.getConteudosLinhaTempo;
+    }
+  }
 }
 </script>
 

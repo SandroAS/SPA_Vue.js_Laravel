@@ -27,8 +27,10 @@ class ConteudoController extends Controller
         $conteudo->imagem = $data['imagem'];
         $conteudo->data = date('Y-m-d H:i:s');
 
-        $conteudoSalvo = $user->conteudos()->save($conteudo);
+        $user->conteudos()->save($conteudo);
 
-        return ['status' => true, "conteudos" => $conteudoSalvo];
+        $conteudos = Conteudo::with('user')->orderBy('data', 'DESC')->paginate(5);
+
+        return ['status' => true, "conteudos" => $conteudos];
     }
 }

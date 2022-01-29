@@ -38,9 +38,8 @@ export default {
         }
       }).then((response) => {
         if(response.data.status){
-          this.conteudo = response.data.conteudo;
-          alert("Conteúdo cadastrado com sucesso!");
           this.resetaConteudo();
+          this.$store.commit('setConteudosLinhaTempo', response.data.conteudos.data);
         } else if(response.data.status == false && response.data.validacao) {
           let errors = "";
           for (let error of Object.values(response.data.erros)){
@@ -54,12 +53,7 @@ export default {
       })
     },
     resetaConteudo(){
-      this.conteudo = {
-        titulo: "",
-        texto: "",
-        link: "",
-        imagem: ""
-      }
+      this.conteudo = {titulo: "", texto: "", link: "", imagem: ""}
     }
   }
 }
