@@ -8,7 +8,9 @@
           </GridVue>
           <GridVue tamanho="11">
             <span class="black-text">
-              <strong>{{nome}}</strong> - <small>{{data}}</small>
+              <router-link :to="'/pagina/' + usuarioid">
+                <strong>{{nome}}</strong> - <small>{{data}}</small>
+              </router-link>
             </span>
           </GridVue>
         </div>
@@ -48,7 +50,7 @@ export default {
   components:{
     GridVue
   },
-  props:['comentarios', 'curtiuconteudo', 'totalcurtidas', 'id', 'perfil','nome','data'],
+  props:['usuarioid', 'comentarios', 'curtiuconteudo', 'totalcurtidas', 'id', 'perfil','nome','data'],
   data () {
     return {
       curtiu: this.curtiuconteudo ? 'favorite' : 'favorite_border',

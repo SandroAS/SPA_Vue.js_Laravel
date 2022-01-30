@@ -3,12 +3,15 @@
     <span slot="menuesquerdo">
       <div class="row valign-wrapper">
         <GridVue tamanho="4">
-          <img :src="usuario.imagem" :alt="usuario.name" class="circle responsive-img"> <!-- notice the "circle" class -->
+          <router-link :to="'/pagina/' + usuario.id">
+            <img :src="usuario.imagem" :alt="usuario.name" class="circle responsive-img">
+          </router-link>
         </GridVue>
         <GridVue tamanho="8">
           <span class="black-text">
-            <h4>{{ usuario.name }}</h4>
-
+            <router-link :to="'/pagina/' + usuario.id">
+              <h4>{{ usuario.name }}</h4>
+            </router-link>
           </span>
         </GridVue>
       </div>
@@ -21,6 +24,7 @@
         :curtiuconteudo="conteudo.curtiu_conteudo"
         :totalcurtidas="conteudo.total_curtidas"
         :id="conteudo.id"
+        :usuarioid="conteudo.user.id"
         :perfil="conteudo.user.imagem"
         :nome="conteudo.user.name"
         :data="conteudo.data"
