@@ -60,6 +60,10 @@ class User extends Authenticatable
 
     public function getImagemAttribute($value)
     {
+        if($value == '/img/perfil_padrao.jpg'){
+            return asset($value);
+        }
+
         return asset("storage" . DIRECTORY_SEPARATOR . "perfis" . $value);
     }
 }

@@ -29,8 +29,6 @@ class UsuarioController extends Controller
         if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
             $user = auth()->user();
             $user->token = $user->createToken($user->email)->accessToken;
-            $user->imagem === DIRECTORY_SEPARATOR . "img" . DIRECTORY_SEPARATOR . "perfil_padrao.jpg" ? $url = $user->imagem : $url = 'storage' .  DIRECTORY_SEPARATOR . 'perfis' . $user->imagem;
-            // $user->imagem = asset($url);
             return ['status' => true, "usuario" => $user];
         } else {
             return ['status' => false];
