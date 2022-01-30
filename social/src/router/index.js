@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/pages/home/Home'
+import Pagina from '@/pages/pagina/Pagina'
 import Login from '@/pages/login/Login'
 import Cadastro from '@/pages/cadastro/Cadastro'
 import Perfil from '@/pages/perfil/Perfil'
@@ -16,6 +17,11 @@ export default new Router({
       component: Home
     },
     {
+      path: '/pagina/:id/:nome?',
+      name: 'Pagina',
+      component: Pagina
+    },
+    {
       path: '/login',
       name: 'Login',
       component: Login
@@ -29,6 +35,6 @@ export default new Router({
       path: '/perfil',
       name: 'Perfil',
       component: Perfil
-    }
+    },
   ]
 })
