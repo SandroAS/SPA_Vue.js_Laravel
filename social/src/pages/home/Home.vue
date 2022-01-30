@@ -25,7 +25,6 @@
         :nome="conteudo.user.name"
         :data="conteudo.data"
       >
-      
         <CardDetalheVue 
           :img="conteudo.imagem"
           :titulo="conteudo.titulo"
@@ -33,6 +32,7 @@
           :link="conteudo.link"
         />
       </CardConteudoVue>
+      <button v-if="urlProximaPagina" @click="carregaPaginacao()" class="btn blue">Mais...</button>
     </span>
   </SiteTemplate>
 </template>
@@ -57,6 +57,7 @@ export default {
         imagem: "",
         password: "",
       },
+      urlProximaPagina: null
     }
   },
   created(){
@@ -69,6 +70,7 @@ export default {
       }).then((response) => {
         if(response.data.status){
           this.$store.commit('setConteudosLinhaTempo', response.data.conteudos.data)
+          this.urlProximaPagina = response.data.conteudos.next_page_url;
         }
       }).catch((error) => {
         console.error(error);
@@ -79,6 +81,26 @@ export default {
   computed: {
     listaConteudos(){
       return this.$store.getters.getConteudosLinhaTempo;
+    }
+  },
+  methods: {
+    carregaPaginacao(){
+      if(!this.urlProximaPagina ){
+        return;
+      }
+      this.$http.get(this.urlProximaPagina, {
+        headers: {
+            "Authorization":"Bearer "+this.$store.getters.getToken
+        }
+      }).then(response => {
+        if(response.data.status){
+          this.$store.commit('setPaginacaoConteudosLinhaTempo',response.data.conteudos.data);
+          this.urlProximaPagina = response.data.conteudos.next_page_url;
+        }
+      }).catch(error => {
+        console.log(error)
+        alert("Erro! Tente novamente mais tarde!");
+      })
     }
   }
 }
