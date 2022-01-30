@@ -74,7 +74,7 @@ export default {
           "Authorization": "Bearer " + this.$store.getters.getToken
         }
       }).then((response) => {
-        if(response.status) {
+        if(response.data.status) {
           this.totalCurtidas = response.data.curtidas;
           this.$store.commit('setConteudosLinhaTempo', response.data.lista.conteudos.data)
           if(this.curtiu == 'favorite_border') {

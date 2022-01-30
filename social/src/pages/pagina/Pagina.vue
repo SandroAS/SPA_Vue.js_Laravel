@@ -96,7 +96,20 @@ export default {
   },
   methods: {
     amigo(id){
-      
+      this.$http.post(this.$urlAPI + `usuario/amigo`, {id: id}, {
+        headers: {
+          "Authorization": "Bearer " + this.$store.getters.getToken
+        }
+      }).then((response) => {
+        if(response.data.status) {
+          console.log(response)
+        } else {
+          alert(response.data.erro);
+        }
+      }).catch((error) => {
+        console.error(error);
+        alert("Erro! Tente novamente mais tarde.")
+      })
     },
     handleScroll(evt, el){
       if(this.pararScroll) return;
