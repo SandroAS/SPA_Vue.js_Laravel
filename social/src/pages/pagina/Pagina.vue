@@ -11,7 +11,7 @@
           <span class="black-text">
             <router-link :to="'/pagina/' + donoPagina.id + '/' + $slug(donoPagina.name, {lower: true})">
               <h4>{{ donoPagina.name }}</h4>
-              <button v-if="exibeBtnSeguir" @click="amigo(donoPagina.id)" class="btn">Seguir</button>
+              <button v-if="exibeBtnSeguir" @click="amigo(donoPagina.id)" class="btn">{{ textoBtn }}</button>
             </router-link>
           </span>
         </GridVue>
@@ -20,6 +20,7 @@
     <span slot="menuesquerdoamigos">
       <h3>Amigos</h3>
       <li v-for="amigo in amigos" :key="amigo.id">{{amigo.name}}</li>
+      <li v-if="!amigos.length">Nenhum Usuário</li>
     </span>
     <span slot="principal">
       <PublicarConteudoVue/>
@@ -74,7 +75,8 @@ export default {
       },
       exibeBtnSeguir: false,
       amigos: [],
-      amigos_logado: [],
+      amigosLogados: [],
+      textoBtn: 'Seguir'
     }
   },
   created(){
@@ -98,7 +100,8 @@ export default {
           }).then((response) => {
             if(response.data.status){
               this.amigos = response.data.amigos;
-              this.amigos_logado = response.data.amigos_logado;
+              this.amigosLogados = response.data.amigos_logado;
+              this.eAmigo();
             } else {
               alert(response.data.erro);
             }
@@ -120,6 +123,15 @@ export default {
     }
   },
   methods: {
+    eAmigo(){
+      for(let amigo of this.amigosLogados) {
+        if(amigo.id == this.donoPagina.id){
+          this.textoBtn = 'Seguindo';
+          return;
+        }
+      }
+      this.textoBtn = "Seguir";
+    },
     amigo(id){
       this.$http.post(this.$urlAPI + `usuario/amigo`, {id: id}, {
         headers: {
@@ -127,7 +139,8 @@ export default {
         }
       }).then((response) => {
         if(response.data.status) {
-          console.log(response)
+          this.amigosLogados = response.data.amigos;
+          this.eAmigo();
         } else {
           alert(response.data.erro);
         }
