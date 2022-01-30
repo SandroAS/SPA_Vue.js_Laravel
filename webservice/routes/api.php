@@ -18,6 +18,8 @@ Route::post('/login', 'UsuarioController@login');
 
 Route::middleware('auth:api')->put('/perfil', 'UsuarioController@perfil');
 Route::middleware('auth:api')->post('/usuario/amigo', 'UsuarioController@amigo');
+Route::middleware('auth:api')->get('/usuario/lista-amigos', 'UsuarioController@listaAmigos');
+Route::middleware('auth:api')->get('/usuario/lista-amigos-pagina/{id}', 'UsuarioController@listaAmigosPagina');
 
 Route::middleware('auth:api')->post('/conteudo/adicionar', 'ConteudoController@adicionar');
 Route::middleware('auth:api')->get('/conteudo/lista', 'ConteudoController@lista');

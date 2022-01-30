@@ -168,4 +168,25 @@ class UsuarioController extends Controller
             return ['status' => false, "erro" => "Esse usuário não existe!"];
         }
     }
+
+    public function listaAmigos(Request $request)
+    {
+        $user = $request->user();
+        if($user){
+            return ['status' => true, "usuario" => $user->amigos];
+        } else {
+            return ['status' => false, "erro" => "Esse usuário não existe!"];
+        }
+    }
+
+    public function listaAmigosPagina($id, Request $request)
+    {
+        $user = User::find($id);
+        $userLogado = $request->user();
+        if($user){
+            return ['status' => true, "usuario" => $user->amigos, "amigos_logado" => $userLogado->amigos];
+        } else {
+            return ['status' => false, "erro" => "Esse usuário não existe!"];
+        }
+    }
 }
