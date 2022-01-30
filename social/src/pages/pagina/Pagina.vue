@@ -3,11 +3,11 @@
     <span slot="menuesquerdo">
       <div class="row valign-wrapper">
         <GridVue tamanho="4">
-          <img :src="usuario.imagem" :alt="usuario.name" class="circle responsive-img"> <!-- notice the "circle" class -->
+          <img :src="donoPagina.imagem" :alt="donoPagina.name" class="circle responsive-img">
         </GridVue>
         <GridVue tamanho="8">
           <span class="black-text">
-            <h4>{{ usuario.name }}</h4>
+            <h4>{{ donoPagina.name }}</h4>
 
           </span>
         </GridVue>
@@ -58,7 +58,11 @@ export default {
         password: "",
       },
       urlProximaPagina: null,
-      pararScroll: false
+      pararScroll: false,
+      donoPagina: {
+        name: "",
+        imagem: ""
+      }
     }
   },
   created(){
@@ -72,6 +76,7 @@ export default {
         if(response.data.status){
           this.$store.commit('setConteudosLinhaTempo', response.data.conteudos.data)
           this.urlProximaPagina = response.data.conteudos.next_page_url;
+          this.donoPagina = response.data.dono
         }
       }).catch((error) => {
         console.error(error);
