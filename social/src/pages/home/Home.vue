@@ -16,6 +16,11 @@
         </GridVue>
       </div>
     </span>
+    <span slot="menuesquerdoamigos">
+      <h3>Seguindo</h3>
+      <li v-for="amigo in amigos" :key="amigo.id">{{amigo.name}}</li>
+      <li v-if="!amigos.length">Nenhum Usuário</li>
+    </span>
     <span slot="principal">
       <PublicarConteudoVue/>
       <CardConteudoVue
@@ -61,7 +66,8 @@ export default {
         password: "",
       },
       urlProximaPagina: null,
-      pararScroll: false
+      pararScroll: false,
+      amigos: []
     }
   },
   created(){
@@ -75,6 +81,22 @@ export default {
         if(response.data.status){
           this.$store.commit('setConteudosLinhaTempo', response.data.conteudos.data)
           this.urlProximaPagina = response.data.conteudos.next_page_url;
+
+          this.$http.get(this.$urlAPI + `usuario/lista-amigos`, {
+            headers: {
+              "Authorization": "Bearer " + this.usuario.token
+            }
+          }).then((response) => {
+            if(response.data.status){
+              this.amigos = response.data.amigos;
+            } else {
+              alert(response.data.erro);
+            }
+          }).catch((error) => {
+            console.error(error);
+            alert("Erro! Tente novamente mais tarde.")
+          })
+
         }
       }).catch((error) => {
         console.error(error);

@@ -173,7 +173,7 @@ class UsuarioController extends Controller
     {
         $user = $request->user();
         if($user){
-            return ['status' => true, "usuario" => $user->amigos];
+            return ['status' => true, "amigos" => $user->amigos];
         } else {
             return ['status' => false, "erro" => "Esse usuário não existe!"];
         }

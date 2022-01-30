@@ -17,6 +17,10 @@
         </GridVue>
       </div>
     </span>
+    <span slot="menuesquerdoamigos">
+      <h3>Amigos</h3>
+      <li v-for="amigo in amigos" :key="amigo.id">{{amigo.name}}</li>
+    </span>
     <span slot="principal">
       <PublicarConteudoVue/>
       <CardConteudoVue
@@ -68,7 +72,9 @@ export default {
         name: "",
         imagem: ""
       },
-      exibeBtnSeguir: false
+      exibeBtnSeguir: false,
+      amigos: [],
+      amigos_logado: [],
     }
   },
   created(){
@@ -84,6 +90,23 @@ export default {
           this.urlProximaPagina = response.data.conteudos.next_page_url;
           this.donoPagina = response.data.dono;
           this.donoPagina.id != this.usuario.id ? this.exibeBtnSeguir = true : this.exibeBtnSeguir = false;
+
+          this.$http.get(this.$urlAPI + `usuario/lista-amigos-pagina/` + this.donoPagina.id, {
+            headers: {
+              "Authorization": "Bearer " + this.usuario.token
+            }
+          }).then((response) => {
+            if(response.data.status){
+              this.amigos = response.data.amigos;
+              this.amigos_logado = response.data.amigos_logado;
+            } else {
+              alert(response.data.erro);
+            }
+          }).catch((error) => {
+            console.error(error);
+            alert("Erro! Tente novamente mais tarde.")
+          })
+
         }
       }).catch((error) => {
         console.error(error);
