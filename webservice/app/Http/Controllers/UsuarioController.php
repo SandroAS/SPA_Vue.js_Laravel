@@ -134,28 +134,12 @@ class UsuarioController extends Controller
 
     public function testes()
     {
-        
-
-        // $user->amigos()->attach($user2->id);
-        // $user->amigos()->detach($user2->id);
-        // $user->amigos()->toggle($user2->id);
-
-        // $conteudo = Conteudo::find(1);
-        // $user->curtidas()->toggle($conteudo);
-
-        // return $user->curtidas;
-        // return $user->curtidas()->count();
-
         // $user->comentarios()->create([
         //     'conteudo_id' => $conteudo->id,
         //     'texto' => 'Show de bola!',
         //     'data' => date('Y-m-d')
         // ]);
-        // $user2->comentarios()->create([
-        //     'conteudo_id' => $conteudo->id,
-        //     'texto' => 'Não gostei.',
-        //     'data' => date('Y-m-d')
-        // ]);
+
         // return $conteudo->comentarios;
     }
 

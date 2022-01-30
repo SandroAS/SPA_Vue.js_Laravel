@@ -24,14 +24,14 @@
           </a>
         </p>
         <p v-if="exibirComentario" class="right-align">
-          <input type="text" placeholder="Comentário">
-          <button class="btn waves-effect waves-light orange"><i class="material-icons">send</i></button>
+          <input v-model="comentario.texto" type="text" placeholder="Comentário">
+          <button @click="salvarComentario()" class="btn waves-effect waves-light orange"><i class="material-icons">send</i></button>
         </p>
         <p v-if="exibirComentario">
           <ul class="collection">
             <li class="collection-item avatar" v-for="comentario in comentarios" :key="comentario.id">
-              <img src="https://materializecss.com/images/yuna.jpg" alt="" class="circle">
-              <span class="title">Maria da Silva <small> - {{ comentario.data }}</small></span>
+              <img :src="comentario.user.imagem" alt="" class="circle">
+              <span class="title">{{ comentario.user.name }} <small> - {{ comentario.data }}</small></span>
               <p>{{ comentario.texto }}</p>
             </li>
           </ul>
@@ -54,6 +54,10 @@ export default {
       curtiu: this.curtiuconteudo ? 'favorite' : 'favorite_border',
       totalCurtidas: this.totalcurtidas,
       exibirComentario: false,
+      comentario: {
+        conteudo_id: "",
+        texto: ""
+      }
     }
   },
   created(){
@@ -84,6 +88,22 @@ export default {
     },
     abreComentarios(id){
       this.exibirComentario = !this.exibirComentario;
+    },
+    salvarComentario(){
+      // this.$http.post(this.$urlAPI + `comentario/adicionar/`, this.comentario, {
+      //   headers: {
+      //     "Authorization": "Bearer " + this.$store.getters.getToken
+      //   }
+      // }).then((response) => {
+      //   if(response.status) {
+      //     this.$store.commit('setComentarios', response.data.comentarios.data)
+      //   } else {
+      //     alert(response.data.erro);
+      //   }
+      // }).catch((error) => {
+      //   console.error(error);
+      //   alert("Erro! Tente novamente mais tarde.")
+      // })
     }
   }
 }
