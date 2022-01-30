@@ -20,7 +20,7 @@
             <i class="material-icons">{{ curtiu }}</i>{{ totalCurtidas }}
           </a>
           <a style="cursor: pointer;" @click="abreComentarios(id)">
-            <i class="material-icons">insert_comment</i>{{ totalComentarios }}
+            <i class="material-icons">insert_comment</i>{{ comentarios.length }}
           </a>
         </p>
         <p v-if="exibirComentario" class="right-align">
@@ -29,20 +29,10 @@
         </p>
         <p v-if="exibirComentario">
           <ul class="collection">
-            <li class="collection-item avatar">
+            <li class="collection-item avatar" v-for="comentario in comentarios" :key="comentario.id">
               <img src="https://materializecss.com/images/yuna.jpg" alt="" class="circle">
-              <span class="title">Maria da Silva <small> - 12h30 12/03/2018</small></span>
-              <p>Gostei desse conteúdo!</p>
-            </li>
-            <li class="collection-item avatar">
-              <img src="https://materializecss.com/images/yuna.jpg" alt="" class="circle">
-              <span class="title">Maria da Silva <small> - 12h30 12/03/2018</small></span>
-              <p>Gostei desse conteúdo!</p>
-            </li>
-            <li class="collection-item avatar">
-              <img src="https://materializecss.com/images/yuna.jpg" alt="" class="circle">
-              <span class="title">Maria da Silva <small> - 12h30 12/03/2018</small></span>
-              <p>Gostei desse conteúdo!</p>
+              <span class="title">Maria da Silva <small> - {{ comentario.data }}</small></span>
+              <p>{{ comentario.texto }}</p>
             </li>
           </ul>
         </p>
@@ -58,13 +48,12 @@ export default {
   components:{
     GridVue
   },
-  props:['totalcomentarios', 'curtiuconteudo', 'totalcurtidas', 'id', 'perfil','nome','data'],
+  props:['comentarios', 'curtiuconteudo', 'totalcurtidas', 'id', 'perfil','nome','data'],
   data () {
     return {
       curtiu: this.curtiuconteudo ? 'favorite' : 'favorite_border',
       totalCurtidas: this.totalcurtidas,
       exibirComentario: false,
-      totalComentarios: this.totalcomentarios
     }
   },
   created(){

@@ -16,7 +16,7 @@ class ConteudoController extends Controller
 
         foreach ($conteudos as $conteudo) {
             $conteudo->total_curtidas = $conteudo->curtidas->count();
-            $conteudo->total_comentarios = $conteudo->comentarios->count();
+            $conteudo->comentarios = $conteudo->comentarios;
             $curtiu = $user->curtidas()->find($conteudo->id);
             if($curtiu){
                 $conteudo->curtiu_conteudo = true;
