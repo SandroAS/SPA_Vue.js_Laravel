@@ -20,7 +20,7 @@
             <i class="material-icons">{{ curtiu }}</i>{{ totalCurtidas }}
           </a>
           <a style="cursor: pointer;" @click="abreComentarios(id)">
-            <i class="material-icons">insert_comment</i>{{ comentarios.length }}
+            <i class="material-icons">insert_comment</i>{{ listaComentarios.length }}
           </a>
         </p>
         <p v-if="exibirComentario" class="right-align">
@@ -56,7 +56,8 @@ export default {
       exibirComentario: false,
       comentario: {
         texto: ""
-      }
+      },
+      listaComentarios: this.comentarios || []
     }
   },
   created(){
