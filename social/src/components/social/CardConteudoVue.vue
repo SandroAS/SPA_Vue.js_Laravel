@@ -25,7 +25,7 @@
         </p>
         <p v-if="exibirComentario" class="right-align">
           <input v-model="comentario.texto" type="text" placeholder="Comentário">
-          <button @click="salvarComentario()" class="btn waves-effect waves-light orange"><i class="material-icons">send</i></button>
+          <button v-if="comentario.texto" @click="salvarComentario(id)" class="btn waves-effect waves-light orange"><i class="material-icons">send</i></button>
         </p>
         <p v-if="exibirComentario">
           <ul class="collection">
@@ -55,7 +55,6 @@ export default {
       totalCurtidas: this.totalcurtidas,
       exibirComentario: false,
       comentario: {
-        conteudo_id: "",
         texto: ""
       }
     }
@@ -89,21 +88,23 @@ export default {
     abreComentarios(id){
       this.exibirComentario = !this.exibirComentario;
     },
-    salvarComentario(){
-      // this.$http.post(this.$urlAPI + `comentario/adicionar/`, this.comentario, {
-      //   headers: {
-      //     "Authorization": "Bearer " + this.$store.getters.getToken
-      //   }
-      // }).then((response) => {
-      //   if(response.status) {
-      //     this.$store.commit('setComentarios', response.data.comentarios.data)
-      //   } else {
-      //     alert(response.data.erro);
-      //   }
-      // }).catch((error) => {
-      //   console.error(error);
-      //   alert("Erro! Tente novamente mais tarde.")
-      // })
+    salvarComentario(id){
+      if(!this.comentario.texto) return;
+      this.$http.post(this.$urlAPI + `comentario/adicionar/` + id, this.comentario, {
+        headers: {
+          "Authorization": "Bearer " + this.$store.getters.getToken
+        }
+      }).then((response) => {
+        if(response.status) {
+          this.$store.commit('setConteudosLinhaTempo', response.data.lista.conteudos.data)
+          this.comentario.texto = "";
+        } else {
+          alert(response.data.erro);
+        }
+      }).catch((error) => {
+        console.error(error);
+        alert("Erro! Tente novamente mais tarde.")
+      })
     }
   }
 }
