@@ -4,11 +4,13 @@
       <div class="card-content">
         <div class="row valign-wrapper">
           <GridVue tamanho="1">
-            <img :src="perfil" :alt="nome" class="circle responsive-img">
+            <router-link :to="'/pagina/' + usuarioid + '/' + $slug(nome, {lower: true})">
+              <img :src="perfil" :alt="nome" class="circle responsive-img">
+            </router-link>
           </GridVue>
           <GridVue tamanho="11">
             <span class="black-text">
-              <router-link :to="'/pagina/' + usuarioid">
+              <router-link :to="'/pagina/' + usuarioid + '/' + $slug(nome, {lower: true})">
                 <strong>{{nome}}</strong> - <small>{{data}}</small>
               </router-link>
             </span>

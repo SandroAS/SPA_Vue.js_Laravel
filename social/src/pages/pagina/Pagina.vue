@@ -3,13 +3,13 @@
     <span slot="menuesquerdo">
       <div class="row valign-wrapper">
         <GridVue tamanho="4">
-          <router-link :to="'/pagina/' + donoPagina.id">
+          <router-link :to="'/pagina/' + donoPagina.id + '/' + $slug(donoPagina.name, {lower: true})">
             <img :src="donoPagina.imagem" :alt="donoPagina.name" class="circle responsive-img">
           </router-link>
         </GridVue>
         <GridVue tamanho="8">
           <span class="black-text">
-            <router-link :to="'/pagina/' + donoPagina.id">
+            <router-link :to="'/pagina/' + donoPagina.id + '/' + $slug(donoPagina.name, {lower: true})">
               <h4>{{ donoPagina.name }}</h4>
             </router-link>
           </span>
