@@ -17,6 +17,7 @@ Route::post('/cadastro', 'UsuarioController@cadastro');
 Route::post('/login', 'UsuarioController@login');
 
 Route::middleware('auth:api')->put('/perfil', 'UsuarioController@perfil');
+Route::middleware('auth:api')->post('/usuario/amigo', 'UsuarioController@amigo');
 
 Route::middleware('auth:api')->post('/conteudo/adicionar', 'ConteudoController@adicionar');
 Route::middleware('auth:api')->get('/conteudo/lista', 'ConteudoController@lista');
@@ -24,5 +25,3 @@ Route::middleware('auth:api')->put('/conteudo/curtir/{id}', 'ConteudoController@
 Route::middleware('auth:api')->get('/conteudo/pagina/lista/{id}', 'ConteudoController@pagina');
 
 Route::middleware('auth:api')->post('/comentario/adicionar/{id}', 'ComentarioController@adicionar');
-
-Route::get('/testes', 'UsuarioController@testes');

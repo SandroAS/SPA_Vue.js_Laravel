@@ -130,18 +130,8 @@ class UsuarioController extends Controller
         return ['status' => true, "usuario" => $user];
     }
 
-    public function testes()
+    public function validaImagem($imagem)
     {
-        // $user->comentarios()->create([
-        //     'conteudo_id' => $conteudo->id,
-        //     'texto' => 'Show de bola!',
-        //     'data' => date('Y-m-d')
-        // ]);
-
-        // return $conteudo->comentarios;
-    }
-
-    public function validaImagem($imagem){
         $explode = explode(',', $imagem);
         $allow = ['png', 'jpg', 'svg','jpeg'];
         $format = str_replace(
@@ -165,5 +155,17 @@ class UsuarioController extends Controller
         }
 
         return true;
+    }
+
+    public function amigo(Request $request)
+    {
+        $user = $request->user();
+        $amigo = User::find($request->id);
+        if($amigo){
+            $user->amigos()->toggle($amigo->id);
+            return ['status' => true, "usuario" => $user->amigos];
+        } else {
+            return ['status' => false, "erro" => "Esse usuário não existe!"];
+        }
     }
 }
