@@ -54,7 +54,6 @@ export default {
   },
   data () {
     return {
-      usuarioAuth: false,
       usuario: {
         name: "",
         email: "",
@@ -105,7 +104,7 @@ export default {
             "Authorization":"Bearer "+this.$store.getters.getToken
         }
       }).then(response => {
-        if(response.data.status){
+        if(response.data.status && this.$route.name == "Home"){
           this.$store.commit('setPaginacaoConteudosLinhaTempo',response.data.conteudos.data);
           this.urlProximaPagina = response.data.conteudos.next_page_url;
           this.pararScroll = false;

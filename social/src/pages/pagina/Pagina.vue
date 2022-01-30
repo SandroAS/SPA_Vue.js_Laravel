@@ -11,6 +11,7 @@
           <span class="black-text">
             <router-link :to="'/pagina/' + donoPagina.id + '/' + $slug(donoPagina.name, {lower: true})">
               <h4>{{ donoPagina.name }}</h4>
+              <button @click="amigo(donoPagina.id)" class="btn">Seguir</button>
             </router-link>
           </span>
         </GridVue>
@@ -94,6 +95,9 @@ export default {
     }
   },
   methods: {
+    amigo(id){
+      
+    },
     handleScroll(evt, el){
       if(this.pararScroll) return;
       if(window.scrollY >= document.body.clientHeight - 1069) {
@@ -110,7 +114,7 @@ export default {
             "Authorization":"Bearer "+this.$store.getters.getToken
         }
       }).then(response => {
-        if(response.data.status){
+        if(response.data.status && this.$route.name == "Pagina"){
           this.$store.commit('setPaginacaoConteudosLinhaTempo',response.data.conteudos.data);
           this.urlProximaPagina = response.data.conteudos.next_page_url;
           this.pararScroll = false;
