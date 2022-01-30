@@ -32,7 +32,7 @@
           :link="conteudo.link"
         />
       </CardConteudoVue>
-      <button v-if="urlProximaPagina" @click="carregaPaginacao()" class="btn blue">Mais...</button>
+      <div v-scroll="handleScroll"></div>
     </span>
   </SiteTemplate>
 </template>
@@ -57,7 +57,8 @@ export default {
         imagem: "",
         password: "",
       },
-      urlProximaPagina: null
+      urlProximaPagina: null,
+      pararScroll: false
     }
   },
   created(){
@@ -84,6 +85,13 @@ export default {
     }
   },
   methods: {
+    handleScroll(evt, el){
+      if(this.pararScroll) return;
+      if(window.scrollY >= document.body.clientHeight - 1069) {
+        this.pararScroll = true;
+        this.carregaPaginacao();
+      }
+    },
     carregaPaginacao(){
       if(!this.urlProximaPagina ){
         return;
@@ -96,6 +104,7 @@ export default {
         if(response.data.status){
           this.$store.commit('setPaginacaoConteudosLinhaTempo',response.data.conteudos.data);
           this.urlProximaPagina = response.data.conteudos.next_page_url;
+          this.pararScroll = false;
         }
       }).catch(error => {
         console.log(error)
