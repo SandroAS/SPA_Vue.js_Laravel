@@ -17,12 +17,20 @@
         </GridVue>
       </div>
     </span>
+  
     <span slot="menuesquerdoamigos">
-      <h3>Amigos</h3>
+      <h3>Amigos{{ amigos }}</h3>
       <router-link v-for="amigo in amigos" :key="amigo.id" :to="'/pagina/' + amigo.id + '/' + $slug(amigo.name, {lower: true})">
         <li>{{amigo.name}}</li>
+        
       </router-link>
       <li v-if="!amigos.length">Nenhum Usuário</li>
+
+      <h3>Seguidores</h3>
+      <router-link v-for="seguidor in seguidores" :key="seguidor.email" :to="'/pagina/' + seguidor.id + '/' + $slug(seguidor.name, {lower: true})">
+        <li>{{seguidor.name}}</li>
+      </router-link>
+      <li v-if="!seguidores.length">Nenhum Usuário</li>
     </span>
     <span slot="principal">
       <PublicarConteudoVue/>
@@ -78,7 +86,8 @@ export default {
       exibeBtnSeguir: false,
       amigos: [],
       amigosLogados: [],
-      textoBtn: 'Seguir'
+      textoBtn: 'Seguir',
+      seguidores: []
     }
   },
   created(){
@@ -114,6 +123,7 @@ export default {
             }).then((response) => {
               if(response.data.status){
                 this.amigos = response.data.amigos;
+                this.seguidores = response.data.seguidores;
                 this.amigosLogados = response.data.amigos_logado;
                 this.eAmigo();
               } else {
@@ -147,6 +157,7 @@ export default {
       }).then((response) => {
         if(response.data.status) {
           this.amigosLogados = response.data.amigos;
+          this.seguidores = response.data.seguidores;
           this.eAmigo();
         } else {
           alert(response.data.erro);

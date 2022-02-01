@@ -58,6 +58,11 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'amigos', 'user_id', 'amigo_id');
     }
 
+    public function seguidores()
+    {
+        return $this->belongsToMany(User::class, 'amigos', 'amigo_id', 'user_id');
+    }
+
     public function getImagemAttribute($value)
     {
         if($value == '/img/perfil_padrao.jpg'){
