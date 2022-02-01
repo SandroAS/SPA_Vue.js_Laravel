@@ -12,8 +12,10 @@ class ConteudoController extends Controller
 {
     public function lista(Request $request)
     {
-        $conteudos = Conteudo::with('user')->orderBy('data', 'DESC')->paginate(5);
         $user = $request->user();
+        $amigos = $user->amigos()->pluck('id');
+        $amigos->push($user->id);
+        $conteudos = Conteudo::whereIn('user_id', $amigos)->with('user')->orderBy('data', 'DESC')->paginate(5);
 
         foreach ($conteudos as $conteudo) {
             $conteudo->total_curtidas = $conteudo->curtidas()->count();
