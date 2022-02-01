@@ -74,6 +74,22 @@ class ConteudoController extends Controller
         }
     }
 
+    public function curtirPagina($id, Request $request)
+    {
+        $conteudo = Conteudo::find($id);
+        if($conteudo) {
+            $user = $request->user();
+            $user->curtidas()->toggle($conteudo->id);
+            return [
+                'status' => true,
+                "curtidas" => $conteudo->curtidas->count(),
+                'lista' => $this->pagina($conteudo->user_id, $request)
+            ];
+        } else {
+            return ['status' => false, "erro" => "Conteúdo não existe!"];
+        }
+    }
+
     public function pagina($id, Request $request)
     {
         $donoDaPagina = User::find($id);

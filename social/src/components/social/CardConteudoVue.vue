@@ -64,12 +64,15 @@ export default {
       listaComentarios: this.comentarios || []
     }
   },
-  created(){
-
-  },
   methods: {
     curtida(id){
-      this.$http.put(this.$urlAPI + `conteudo/curtir/` + id, {}, {
+      let url = "";
+      if(this.$route.name == "Home") {
+        url = "conteudo/curtir/";
+      } else {
+        url = "conteudo/curtir-pagina/";
+      }
+      this.$http.put(this.$urlAPI + url + id, {}, {
         headers: {
           "Authorization": "Bearer " + this.$store.getters.getToken
         }
@@ -94,8 +97,14 @@ export default {
       this.exibirComentario = !this.exibirComentario;
     },
     salvarComentario(id){
+      let url = "";
+      if(this.$route.name == "Home") {
+        url = "comentario/comentar/";
+      } else {
+        url = "comentario/comentar-pagina/";
+      }
       if(!this.comentario.texto) return;
-      this.$http.post(this.$urlAPI + `comentario/adicionar/` + id, this.comentario, {
+      this.$http.post(this.$urlAPI + url + id, this.comentario, {
         headers: {
           "Authorization": "Bearer " + this.$store.getters.getToken
         }
